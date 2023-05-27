@@ -44,7 +44,7 @@
 # END GIT SETTINGS - ANSIBLE MANAGED BLOCK
 
 [user]
-        email = REDACTED@example.com
+        email = 36868915+REDACTED_USERcy@users.noreply.github.com
         name = Evan Tan
 [commit]
         gpgsign = true
@@ -63,6 +63,7 @@
     light = false
 [merge]
     conflictstyle = diff3
+    ff = no
 [diff]
     colorMoved = default
 
