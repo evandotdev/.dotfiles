@@ -333,10 +333,24 @@ tmux_windowizer_widget() {
   zle reset-prompt # Reset the prompt
 }
 zle -N tmux_windowizer_widget
+
+windowizer() {
+    local selected=$(~/.local/bin/windowizer "$@")
+    [[ -n $selected ]] && cd "$selected"
+}
+
+windowizer_widget() {
+    zle -I
+    windowizer
+    zle reset-prompt
+}
+zle -N windowizer_widget
+
 #
 # NOTE: use the widgets if you want cleaner outputs from previous terminals
-bindkey -s '^f' 'tmux-windowizer\n'
+# bindkey -s '^f' 'tmux-windowizer\n'
 # bindkey -s '^f' 'tmux-sessionizer\n'
+bindkey -s '^f' 'windowizer\n'
 
 # Where should I put you?
 # bindkey -s ^f "tmux-sessionizer\n"
