@@ -21,11 +21,14 @@
       "Bash(daily-commits)",
       "Bash(~/.local/bin/daily-commits)",
       "Bash(rg:*)",
-      "Bash(find:*)",
       "Bash(grep:*)",
       "WebFetch(domain:*.readthedocs.io)",
       "WebFetch(domain:arxiv.org)",
-      "Read(.env.example)"
+      "Read(.env.example)",
+      "Bash(npm run build:*)",
+      "Bash(npm run type-check:*)",
+      "Bash(npm install)",
+      "Bash(npx typia:*)"
     ],
     "deny": [
       "Bash(git push:*)",
@@ -33,7 +36,8 @@
       "Bash(cat:*.env:*)",
       "Read(.env)",
       "Read(.envrc)"
-    ]
+    ],
+    "defaultMode": "default"
   },
   "hooks": {
     "SessionStart": [
@@ -46,6 +50,13 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true
   },
   "feedbackSurveyState": {
     "lastShownTime": 1753939765399
