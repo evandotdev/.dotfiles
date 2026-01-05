@@ -11,6 +11,7 @@ plugins=(git)
 ZSH_THEME="robbyrussell"
 DISABLE_AUTO_UPDATE="true" # disable oh-my-zsh auto-update
 source $XDG_CONFIG_HOME/zsh/ohmyzsh/oh-my-zsh.sh
+unsetopt autocd
 
 
 case $(uname) in
@@ -111,7 +112,7 @@ setopt PROMPT_SUBST # ??
 # zsh
 source "$ZDOTDIR/zsh-functions"
 
-eval "$(fnm env --use-on-cd)"
+eval "$(fnm env)"
 # FUCK NVM, use fnm
 # # node version manager
 # export NVM_DIR="$HOME/.nvm"
