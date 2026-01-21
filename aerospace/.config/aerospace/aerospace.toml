@@ -259,6 +259,12 @@ check-further-callbacks = true
 run = 'layout floating'
 
 [[on-window-detected]]
+if.app-id = "eu.exelban.Stats"
+if.app-name-regex-substring = 'CPU'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
 if.during-aerospace-startup = false
 if.app-id = 'org.mozilla.firefox'
 if.window-title-regex-substring = 'Picture-in-Picture'

@@ -735,6 +735,10 @@
 	<false/>
 	<key>HideMenuBarInFullscreen</key>
 	<true/>
+	<key>HideScrollbar</key>
+	<false/>
+	<key>HideTab</key>
+	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_41FF6A97-C042-4878-9289-64E85955A0DF</key>
@@ -1429,6 +1433,8 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
+			<key>Brighten Bold Text (Dark)</key>
+			<true/>
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
@@ -1437,6 +1443,8 @@
 			<integer>90</integer>
 			<key>Command</key>
 			<string></string>
+			<key>Cursor Boost (Dark)</key>
+			<real>0.0</real>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -2320,6 +2328,8 @@
 			<key>Shortcut</key>
 			<string></string>
 			<key>Silence Bell</key>
+			<true/>
+			<key>Smart Cursor Color (Dark)</key>
 			<false/>
 			<key>Sync Title</key>
 			<false/>
@@ -2361,6 +2371,8 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Cursor Guide (Dark)</key>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
@@ -2368,7 +2380,7 @@
 			<key>Use Separate Colors for Light and Dark Mode</key>
 			<true/>
 			<key>Vertical Spacing</key>
-			<real>1</real>
+			<real>0.80000000000000004</real>
 			<key>Visual Bell</key>
 			<false/>
 			<key>Window Type</key>
