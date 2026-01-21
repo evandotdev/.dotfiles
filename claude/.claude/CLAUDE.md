@@ -1,3 +1,77 @@
-# Comments
+# Code Style
 
-- Try not to add unnecessary comments throughout the code. This is because if the reader wanted to know what the code does they will read the code. Additionally, adding comments makes it harder to maintain as code changes over time.
+- Avoid comments unless the "why" isn't obvious from the code
+- Prefer early returns over deep nesting
+- Functions should do one thing
+- Don't abstract until you see a pattern 2-3 times
+- Avoid using magic numbers, try to create variables with meaningful names.
+
+# Layered Architecture (Web Backends)
+
+## Controller
+
+- Input validation, HTTP formatting, status codes
+- Throws HTTP exceptions
+- NO business logic, retries, or database access
+
+## Service
+
+- Business logic, orchestration, retry strategies
+- Database operations
+- Decides what to do with results
+
+## API Client
+
+- One method = one HTTP request
+- Transform responses (e.g., snake_case → camelCase)
+- Throws on HTTP errors
+- NO retries, fallbacks, or business decisions
+
+# Rules
+
+- Validation requiring external calls → controller
+- Retry logic → service layer
+- API clients are stateless - caller handles failures
+- Split methods that do multiple things
+
+# Misc
+
+- Remember to update any .env.example files with new environment variables that you have added.
+- Remember always to use example values inside of .env.example, avoid using real values.
+- Remember to update any environment variable example files whenever an environment variable's name changes, default value changes, or as needed.
+
+
+# Database
+- Try to use UUID7 as database keys, instead of UUID4 as UUID7 are time-ordered so it has better performance on sorting.
+
+# External/Internal API Calls
+- When making API calls to internal or external services, always add retry logic with consistent formatting and a single function or decorator if possible to standardize retry logic. This is to ensure reliability of the calls.
+
+# Codebase Exploration with Serena
+
+When exploring or searching codebases, prefer Serena's semantic tools over traditional grep/glob/Task agents:
+
+**Use Serena for:**
+- Finding symbols by name: `find_symbol` with name patterns
+- Understanding file structure: `get_symbols_overview`
+- Tracing symbol usage: `find_referencing_symbols`
+- Flexible pattern search: `search_for_pattern`
+- Reading symbol bodies: `find_symbol` with `include_body=True`
+
+**Fall back to codebase-locator/codebase-analyzer agents for:**
+- Finding non-code files (configs, docs, assets)
+- Quick file path discovery without semantic analysis
+- Projects where Serena LSP isn't configured
+
+# Git
+- Check if you are working in a bare git repository.
+-- If you are in a bare git repository. Whenever working on a new feature, bugfix, enhancement, etc. use the commands from ~/.local/bin
+~/.local/bin/wtc -> worktree creation helper, read the script carefully to understand it.
+- Before creating a worktree, always pull the latest changes from main or master using either of the following. NOTE: remember to check worktrees using `git worktree list` to remove any worktree that references the main or master branch before doing so.
+
+```
+# for main
+git fetch origin main:main
+# for master
+git fetch origin master:master
+```

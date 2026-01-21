@@ -1,12 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run lint)",
-      "Bash(npm run test:*)",
       "Read(~/.zshrc)",
       "Bash(git log:*)",
       "Bash(gh pr view:*)",
       "Bash(gh pr diff:*)",
+      "Bash(git show:*)",
+      "Bash(git diff:*)",
       "Bash(git pull:*)",
       "Bash(git fetch:*)",
       "Bash(python -m ruff:*)",
@@ -24,18 +24,84 @@
       "Bash(grep:*)",
       "WebFetch(domain:*.readthedocs.io)",
       "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:openrouter.ai)",
+      "WebFetch(domain:ai-sdk.dev)",
+      "WebFetch(domain:*.githubusercontent.com)",
+      "WebFetch(domain:*.github.com)",
       "Read(.env.example)",
+      "Bash(npm run lint)",
+      "Bash(npm run test:*)",
+      "Bash(npm run dev:*)",
       "Bash(npm run build:*)",
       "Bash(npm run type-check:*)",
-      "Bash(npm install)",
-      "Bash(npx typia:*)"
+      "Bash(npm install:*)",
+      "Bash(npx typia:*)",
+      "Bash(npx tsc:*)",
+      "Bash(fly secrets list)",
+      "Read(/Users/jarvis/.local/bin*)",
+      "Read(~/.local/bin*)",
+      "WebSearch",
+      "Bash(curl -s http://localhost:*)",
+      "Bash(curl http://localhost:*)",
+      "Bash(curl http://127.0.0.1:*)",
+      "Bash(jq:*)",
+      "mcp__plugin_context7_context7__query-docs",
+      "mcp__plugin_serena_serena__find_symbol",
+      "mcp__plugin_serena_serena__find_file",
+      "mcp__plugin_serena_serena__activate_project",
+      "mcp__plugin_serena_serena__list_dir",
+      "mcp__plugin_serena_serena__read_file",
+      "mcp__plugin_serena_serena__search_for_pattern",
+      "mcp__plugin_serena_serena__initial_instructions",
+      "mcp__plugin_serena_serena__check_onboarding_performed",
+      "mcp__plugin_serena_serena__list_memories",
+      "mcp__plugin_serena_serena__get_symbols_overview",
+      "mcp__plugin_serena_serena__think_about_collected_information"
     ],
     "deny": [
       "Bash(git push:*)",
       "Bash(git ps:*)",
       "Bash(cat:*.env:*)",
       "Read(.env)",
-      "Read(.envrc)"
+      "Read(.envrc)",
+      "Bash(docker rm:*)",
+      "Bash(docker volume rm:*)",
+      "Bash(gh repo delete)",
+      "Bash(gh auth logout)",
+      "Bash(gh auth token)",
+      "Bash(gh ssh-key:*)",
+      "Bash(gh gpg-key:*)",
+      "Bash(gh repo deploy-key:*)",
+      "Bash(gh secret:*)",
+      "Bash(gh variable:*)",
+      "Bash(gh api -X DELETE)",
+      "Bash(gh api -X PUT)",
+      "Bash(gh api -X PATCH)",
+      "Bash(gh api -X POST)",
+      "Bash(gh api --method DELETE)",
+      "Bash(gh api --method PUT)",
+      "Bash(gh api --method PATCH)",
+      "Bash(gh api --method POST)",
+      "Bash(gh repo edit)",
+      "Bash(gh repo archive)",
+      "Bash(gh repo unarchive)",
+      "Bash(gh repo rename)",
+      "Bash(gh repo create)",
+      "Bash(gh repo fork)",
+      "Bash(gh ruleset:*)",
+      "Bash(gh release:*)",
+      "Bash(gh workflow:*)",
+      "Bash(gh run:*)",
+      "Bash(gh cache:*)",
+      "Bash(gh gist:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh project:*)",
+      "Bash(gh label:*)",
+      "Bash(gh codespace:*)",
+      "Bash(gh extension:*)",
+      "Bash(gh config:*)",
+      "Bash(gh alias:*)"
     ],
     "defaultMode": "default"
   },
@@ -49,14 +115,53 @@
           }
         ]
       }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude needs your input\" with title \"🔔 Claude Code\" subtitle \"'\"Tab $(($(echo $ITERM_SESSION_ID | sed 's/.*t\\([0-9]*\\).*/\\1/') + 1)).$(($(echo $ITERM_SESSION_ID | sed 's/.*p\\([0-9]*\\).*/\\1/') + 1)): $(basename $(pwd)) ($(git branch --show-current 2>/dev/null || echo 'no repo'))\"'\"'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Task completed\" with title \"✅ Claude Code\" subtitle \"'\"Tab $(($(echo $ITERM_SESSION_ID | sed 's/.*t\\([0-9]*\\).*/\\1/') + 1)).$(($(echo $ITERM_SESSION_ID | sed 's/.*p\\([0-9]*\\).*/\\1/') + 1)): $(basename $(pwd)) ($(git branch --show-current 2>/dev/null || echo 'no repo'))\"'\"'"
+          }
+        ]
+      }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true
+    "playwright@claude-plugins-official": true,
+    "stripe@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "supabase@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "serena@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true
   },
   "feedbackSurveyState": {
     "lastShownTime": 1753939765399

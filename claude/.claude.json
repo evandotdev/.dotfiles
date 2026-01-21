@@ -1,0 +1,631 @@
+{
+  "numStartups": 219,
+  "installMethod": "global",
+  "verbose": true,
+  "hasSeenTasksHint": true,
+  "tipsHistory": {
+    "git-worktrees": 808,
+    "memory-command": 206,
+    "theme-command": 812,
+    "prompt-queue": 137,
+    "enter-to-steer-in-relatime": 812,
+    "todo-list": 814,
+    "# for memory": 766,
+    "install-github-app": 816,
+    "permissions": 816,
+    "drag-and-drop-images": 807,
+    "double-esc": 772,
+    "continue": 808,
+    "custom-commands": 812,
+    "shift-tab": 808,
+    "terminal-setup": 816,
+    "custom-agents": 812,
+    "ide-upsell-external-terminal": 797,
+    "status-line": 812,
+    "paste-images-mac": 814,
+    "shift-enter": 709,
+    "image-paste": 807,
+    "plan-mode-for-complex-tasks": 788,
+    "stickers-command": 814,
+    "install-slack-app": 814,
+    "double-esc-code-restore": 816,
+    "rename-conversation": 806,
+    "config-thinking-mode": 806,
+    "ultrathink-keyword": 806,
+    "btw-side-question": 812,
+    "desktop-app": 812,
+    "web-app": 812,
+    "mobile-app": 812,
+    "default-permission-mode-config": 816,
+    "shift-enter-setup": 781,
+    "new-user-warmup": 8,
+    "frontend-design-plugin": 42,
+    "guest-passes": 218
+  },
+  "promptQueueUseCount": 78,
+  "cachedStatsigGates": {
+    "tengu_prompt_suggestion": false,
+    "tengu_year_end_2025_campaign_promo": false,
+    "tengu_streaming_tool_execution2": false,
+    "tengu_session_memory": false
+  },
+  "cachedDynamicConfigs": {
+    "tengu_1p_event_batch_config": {
+      "scheduledDelayMillis": 5000,
+      "maxExportBatchSize": 200,
+      "maxQueueSize": 8192
+    },
+    "tengu-top-of-feed-tip": {
+      "tip": "",
+      "color": ""
+    }
+  },
+  "cachedGrowthBookFeatures": {
+    "tengu_mcp_tool_search": true,
+    "tengu_disable_bypass_permissions_mode": false,
+    "strawberry_granite_flag": "N/A",
+    "persimmon_marble_flag": "N/A",
+    "tengu_tool_pear": false,
+    "tengu_c4w_usage_limit_notifications_enabled": true,
+    "tengu_thinkback": false,
+    "tengu_sumi": true,
+    "tengu_react_vulnerability_warning": false,
+    "tengu_ant_attribution_header_new": true,
+    "tengu_pid_based_version_locking": true,
+    "tengu_accept_with_feedback": true,
+    "tengu_prompt_suggestion": true,
+    "tengu_tool_result_persistence": true,
+    "tengu_tool_search_unsupported_models": null,
+    "tengu_1p_event_batch_config": {
+      "scheduledDelayMillis": 5000,
+      "maxExportBatchSize": 200,
+      "maxQueueSize": 8192
+    },
+    "tengu_event_sampling_config": {},
+    "tengu-top-of-feed-tip": {
+      "tip": "",
+      "color": ""
+    },
+    "tengu_permission_explainer": false,
+    "tengu_scratch": false,
+    "tengu_log_segment_events": false,
+    "tengu_log_datadog_events": true,
+    "tengu_post_compact_survey": false,
+    "tengu_streaming_tool_execution2": false,
+    "tengu_vscode_review_upsell": false,
+    "tengu_vscode_onboarding": false,
+    "enhanced_telemetry_beta": false,
+    "tengu_code_diff_cli": true,
+    "tengu_session_memory": false,
+    "tengu_bash_haiku_prefetch": true,
+    "tengu_plan_mode_interview_phase": false,
+    "tengu_sm_compact": false,
+    "tengu_compact_streaming_retry": false,
+    "tengu_keybinding_customization": false,
+    "tengu_claudeai_mcp_connectors": false,
+    "tengu_plank_river_frost": "user_intent"
+  },
+  "mcpServers": {},
+  "userID": "83197e42d2f90701197baec0e20e60bd54894a4136dd7bbf9362db7327bfe28c",
+  "projects": {
+    "/Users/jarvis/.dotfiles": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 2,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "lastCost": 0.0036339999999999996,
+      "lastAPIDuration": 4656,
+      "lastAPIDurationWithoutRetries": 4652,
+      "lastToolDuration": 0,
+      "lastDuration": 7410,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 3329,
+      "lastTotalOutputTokens": 61,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 0,
+      "lastTotalWebSearchRequests": 0,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 3329,
+          "outputTokens": 61,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.0036339999999999996
+        }
+      },
+      "lastSessionId": "cdd5b8b4-d730-4514-83c6-599d25284f6a",
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "disabledMcpServers": [
+        "myserver"
+      ]
+    },
+    "/Users/jarvis/personal/youtube-transcript": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "exampleFiles": [
+        "main.py",
+        "middleware.py",
+        "routes.py",
+        "diarize.py",
+        "config.py"
+      ],
+      "exampleFilesGeneratedAt": 1767282117214,
+      "lastCost": 0.10695094999999999,
+      "lastAPIDuration": 52138,
+      "lastAPIDurationWithoutRetries": 52131,
+      "lastToolDuration": 12426,
+      "lastDuration": 494126,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 1459,
+      "lastTotalOutputTokens": 2288,
+      "lastTotalCacheCreationInputTokens": 32693,
+      "lastTotalCacheReadInputTokens": 69305,
+      "lastTotalWebSearchRequests": 0,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 1424,
+          "outputTokens": 1167,
+          "cacheReadInputTokens": 17779,
+          "cacheCreationInputTokens": 22825,
+          "webSearchRequests": 0,
+          "costUSD": 0.03756815
+        },
+        "claude-sonnet-4-5-20250929": {
+          "inputTokens": 35,
+          "outputTokens": 1121,
+          "cacheReadInputTokens": 51526,
+          "cacheCreationInputTokens": 9868,
+          "webSearchRequests": 0,
+          "costUSD": 0.0693828
+        }
+      },
+      "lastSessionId": "32625a59-4090-4700-bde7-12630c77a8d1"
+    },
+    "/Users/jarvis/personal/youtube-transcript-saas": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "lastCost": 0.0606733,
+      "lastAPIDuration": 34342,
+      "lastAPIDurationWithoutRetries": 34339,
+      "lastToolDuration": 0,
+      "lastDuration": 89788819,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 1291,
+      "lastTotalOutputTokens": 1463,
+      "lastTotalCacheCreationInputTokens": 8010,
+      "lastTotalCacheReadInputTokens": 32146,
+      "lastTotalWebSearchRequests": 0,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 1268,
+          "outputTokens": 229,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.0024129999999999998
+        },
+        "claude-sonnet-4-5-20250929": {
+          "inputTokens": 23,
+          "outputTokens": 1234,
+          "cacheReadInputTokens": 32146,
+          "cacheCreationInputTokens": 8010,
+          "webSearchRequests": 0,
+          "costUSD": 0.0582603
+        }
+      },
+      "lastSessionId": "201e4d58-e389-40d2-b266-ce6bc17b5339"
+    },
+    "/Users/jarvis/personal/youtube-transcript-ai": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 1,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "exampleFiles": [
+        "routes.py",
+        "youtube.py",
+        "main.py",
+        "model.py",
+        "middleware.py"
+      ],
+      "exampleFilesGeneratedAt": 1767969901394,
+      "lastCost": 1.982053,
+      "lastAPIDuration": 286998,
+      "lastAPIDurationWithoutRetries": 286972,
+      "lastToolDuration": 126,
+      "lastDuration": 3543380,
+      "lastLinesAdded": 36,
+      "lastLinesRemoved": 29,
+      "lastTotalInputTokens": 2417,
+      "lastTotalOutputTokens": 11747,
+      "lastTotalCacheCreationInputTokens": 184400,
+      "lastTotalCacheReadInputTokens": 1213508,
+      "lastTotalWebSearchRequests": 0,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 2069,
+          "outputTokens": 468,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 13065,
+          "webSearchRequests": 0,
+          "costUSD": 0.020740250000000002
+        },
+        "claude-opus-4-5-20251101": {
+          "inputTokens": 348,
+          "outputTokens": 11279,
+          "cacheReadInputTokens": 1213508,
+          "cacheCreationInputTokens": 171335,
+          "webSearchRequests": 0,
+          "costUSD": 1.96131275
+        }
+      },
+      "lastSessionId": "ac584cff-1e07-486a-95aa-bb29a1450c15",
+      "hasCompletedProjectOnboarding": true
+    },
+    "/Users/jarvis/saas-r-us/transcript-saas": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 4,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "lastCost": 15.137513550000012,
+      "lastAPIDuration": 1790839,
+      "lastAPIDurationWithoutRetries": 1785768,
+      "lastToolDuration": 1043512,
+      "lastDuration": 8438175,
+      "lastLinesAdded": 372,
+      "lastLinesRemoved": 443,
+      "lastTotalInputTokens": 124539,
+      "lastTotalOutputTokens": 86929,
+      "lastTotalCacheCreationInputTokens": 1135363,
+      "lastTotalCacheReadInputTokens": 13508442,
+      "lastTotalWebSearchRequests": 4,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 111308,
+          "outputTokens": 12970,
+          "cacheReadInputTokens": 1031248,
+          "cacheCreationInputTokens": 86303,
+          "webSearchRequests": 0,
+          "costUSD": 0.3871615500000002
+        },
+        "claude-opus-4-5-20251101": {
+          "inputTokens": 13231,
+          "outputTokens": 73959,
+          "cacheReadInputTokens": 12477194,
+          "cacheCreationInputTokens": 1049060,
+          "webSearchRequests": 4,
+          "costUSD": 14.750352000000003
+        }
+      },
+      "lastSessionId": "0f2e4902-c1c4-4038-9115-d19a06c778fb",
+      "exampleFiles": [
+        "index.ts",
+        "transcripts.controller.ts",
+        "app.module.ts",
+        "transcripts.service.ts",
+        "database.provider.ts"
+      ],
+      "exampleFilesGeneratedAt": 1768787047618,
+      "hasCompletedProjectOnboarding": true
+    },
+    "/Users/jarvis/saas-r-us/epos-backend": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "exampleFiles": [
+        "service.go",
+        "handler.go",
+        "main.go",
+        "models.go",
+        "menu.controller.ts"
+      ],
+      "exampleFilesGeneratedAt": 1767586712025,
+      "lastCost": 0.012406,
+      "lastAPIDuration": 7745,
+      "lastAPIDurationWithoutRetries": 7743,
+      "lastToolDuration": 0,
+      "lastDuration": 7408,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 3662,
+      "lastTotalOutputTokens": 256,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 0,
+      "lastTotalWebSearchRequests": 0,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 1931,
+          "outputTokens": 229,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.003076
+        },
+        "claude-opus-4-5-20251101": {
+          "inputTokens": 1731,
+          "outputTokens": 27,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.00933
+        }
+      },
+      "lastSessionId": "cc9fc7b1-f41f-4a17-b899-33ebc7b9353a"
+    },
+    "/Users/jarvis/saas-r-us/transcript-saas.git": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "exampleFiles": [
+        "page.tsx",
+        "app-sidebar.tsx",
+        "transcripts.controller.ts",
+        "app.module.ts",
+        "index.ts"
+      ],
+      "exampleFilesGeneratedAt": 1768792774326,
+      "hasCompletedProjectOnboarding": true,
+      "lastCost": 3.912027749999999,
+      "lastAPIDuration": 408988,
+      "lastAPIDurationWithoutRetries": 408026,
+      "lastToolDuration": 212703,
+      "lastDuration": 9449461,
+      "lastLinesAdded": 2,
+      "lastLinesRemoved": 2,
+      "lastTotalInputTokens": 33656,
+      "lastTotalOutputTokens": 13414,
+      "lastTotalCacheCreationInputTokens": 421753,
+      "lastTotalCacheReadInputTokens": 1841915,
+      "lastTotalWebSearchRequests": 0,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 33119,
+          "outputTokens": 802,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.03712900000000001
+        },
+        "claude-opus-4-5-20251101": {
+          "inputTokens": 537,
+          "outputTokens": 12612,
+          "cacheReadInputTokens": 1841915,
+          "cacheCreationInputTokens": 421753,
+          "webSearchRequests": 0,
+          "costUSD": 3.874898749999999
+        }
+      },
+      "lastSessionId": "a4059b7e-cd67-4a13-b481-edf7d0e5391d"
+    },
+    "/Users/jarvis/saas-r-us/youtube-transcript-ai": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "exampleFiles": [
+        "routes.py",
+        "main.py",
+        "youtube.py",
+        "model.py",
+        "middleware.py"
+      ],
+      "exampleFilesGeneratedAt": 1768908119775,
+      "hasCompletedProjectOnboarding": true,
+      "lastCost": 0.30644425,
+      "lastAPIDuration": 33426,
+      "lastAPIDurationWithoutRetries": 31560,
+      "lastToolDuration": 0,
+      "lastDuration": 5447709,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 3711,
+      "lastTotalOutputTokens": 798,
+      "lastTotalCacheCreationInputTokens": 39657,
+      "lastTotalCacheReadInputTokens": 78694,
+      "lastTotalWebSearchRequests": 0,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 3681,
+          "outputTokens": 227,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.004816
+        },
+        "claude-opus-4-5-20251101": {
+          "inputTokens": 30,
+          "outputTokens": 571,
+          "cacheReadInputTokens": 78694,
+          "cacheCreationInputTokens": 39657,
+          "webSearchRequests": 0,
+          "costUSD": 0.30162825
+        }
+      },
+      "lastSessionId": "07b81f42-d8bb-404f-871d-5f00dab9169a"
+    },
+    "/Users/jarvis/saas-r-us/transcript-saas.git/feat_github-ci-cd": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "exampleFiles": [
+        "transcripts.controller.ts",
+        "index.ts",
+        "app.module.ts",
+        "transcripts.service.ts",
+        "transcript-api.service.ts"
+      ],
+      "exampleFilesGeneratedAt": 1768916688078
+    }
+  },
+  "firstStartTime": "2026-01-01T13:23:33.872Z",
+  "sonnet45MigrationComplete": true,
+  "opus45MigrationComplete": true,
+  "thinkingMigrationComplete": true,
+  "changelogLastFetched": 1768978043188,
+  "claudeCodeFirstTokenDate": "2025-03-06T05:15:18.672084Z",
+  "hasCompletedOnboarding": true,
+  "lastOnboardingVersion": "2.0.76",
+  "lastReleaseNotesSeen": "2.1.14",
+  "hasShownOpus45Notice": {
+    "2ec9c7de-10cb-41bb-beb2-885b35859ae9": true
+  },
+  "officialMarketplaceAutoInstallAttempted": true,
+  "officialMarketplaceAutoInstalled": true,
+  "s1mAccessCache": {
+    "2ec9c7de-10cb-41bb-beb2-885b35859ae9": {
+      "hasAccess": false,
+      "hasAccessNotAsDefault": false,
+      "timestamp": 1768985022160
+    }
+  },
+  "lastPlanModeUse": 1768986258123,
+  "oauthAccount": {
+    "accountUuid": "ea984247-2b71-469a-a2fa-2d64eab5b0c2",
+    "emailAddress": "REDACTED@example.com",
+    "organizationUuid": "2ec9c7de-10cb-41bb-beb2-885b35859ae9",
+    "hasExtraUsageEnabled": false,
+    "displayName": "Evan",
+    "organizationRole": "admin",
+    "workspaceRole": null,
+    "organizationName": "REDACTED@example.com's Organization"
+  },
+  "passesEligibilityCache": {
+    "2ec9c7de-10cb-41bb-beb2-885b35859ae9": {
+      "eligible": true,
+      "referral_code_details": {
+        "code": "4QYUB8GqcA",
+        "campaign": "claude_code_guest_pass",
+        "referral_link": "https://claude.ai/referral/4QYUB8GqcA"
+      },
+      "referrer_reward": null,
+      "timestamp": 1768986267737
+    }
+  },
+  "passesUpsellSeenCount": 4,
+  "groveConfigCache": {
+    "ea984247-2b71-469a-a2fa-2d64eab5b0c2": {
+      "grove_enabled": true,
+      "timestamp": 1768905787972
+    }
+  },
+  "opusProMigrationComplete": true,
+  "cachedChromeExtensionInstalled": false,
+  "githubRepoPaths": {
+    "REDACTED_USERcy/.dotfiles": [
+      "/Users/jarvis/.dotfiles"
+    ]
+  },
+  "feedbackSurveyState": {
+    "lastShownTime": 1768395325203
+  }
+}
