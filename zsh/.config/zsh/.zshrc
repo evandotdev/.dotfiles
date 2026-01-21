@@ -527,3 +527,4 @@ unset __conda_setup
 wtc() {
     source ~/.local/bin/wtc "$@"
 }
+export PATH="$HOME/.deno/bin:$PATH"
