@@ -126,34 +126,34 @@
       "projectOnboardingSeenCount": 3,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 0.7809570000000001,
-      "lastAPIDuration": 61080,
-      "lastAPIDurationWithoutRetries": 61077,
-      "lastToolDuration": 17,
-      "lastDuration": 352410,
-      "lastLinesAdded": 28,
-      "lastLinesRemoved": 11,
-      "lastTotalInputTokens": 775,
-      "lastTotalOutputTokens": 3152,
-      "lastTotalCacheCreationInputTokens": 67994,
-      "lastTotalCacheReadInputTokens": 555399,
+      "lastCost": 3.6686505000000005,
+      "lastAPIDuration": 403043,
+      "lastAPIDurationWithoutRetries": 403034,
+      "lastToolDuration": 882,
+      "lastDuration": 1101346,
+      "lastLinesAdded": 144,
+      "lastLinesRemoved": 71,
+      "lastTotalInputTokens": 7932,
+      "lastTotalOutputTokens": 18382,
+      "lastTotalCacheCreationInputTokens": 168116,
+      "lastTotalCacheReadInputTokens": 4318759,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 705,
-          "outputTokens": 78,
+          "inputTokens": 7516,
+          "outputTokens": 530,
           "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.001095
+          "costUSD": 0.010166
         },
         "claude-opus-4-5-20251101": {
-          "inputTokens": 70,
-          "outputTokens": 3074,
-          "cacheReadInputTokens": 555399,
-          "cacheCreationInputTokens": 67994,
+          "inputTokens": 416,
+          "outputTokens": 17852,
+          "cacheReadInputTokens": 4318759,
+          "cacheCreationInputTokens": 168116,
           "webSearchRequests": 0,
-          "costUSD": 0.779862
+          "costUSD": 3.6584845000000006
         }
       },
       "lastSessionId": "9f533fee-bcd0-4bfe-9baa-512240877df0",
@@ -637,7 +637,7 @@
       "timestamp": 1769347414745
     }
   },
-  "lastPlanModeUse": 1769348026101,
+  "lastPlanModeUse": 1769348635989,
   "oauthAccount": {
     "accountUuid": "ea984247-2b71-469a-a2fa-2d64eab5b0c2",
     "emailAddress": "REDACTED@example.com",

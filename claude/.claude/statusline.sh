@@ -202,17 +202,17 @@ fi
 # Separator
 SEP="${DIM}│${RESET}"
 
+# Directory section
+DIR_SECTION="${DIM}CWD:${RESET}${BLUE}${DIR_NAME}${RESET}"
+
 # Session name/ID section
 SESSION_SECTION=""
 if [ -n "$SESSION_NAME" ]; then
-    SESSION_SECTION="${DIM}SESH:${RESET}${CYAN}${SESSION_NAME}${RESET} ${SEP} "
+    SESSION_SECTION=" ${SEP} ${DIM}SESH:${RESET}${CYAN}${SESSION_NAME}${RESET}"
 fi
 
 # Model section
-MODEL_SECTION="${YELLOW}${MODEL_ID}${RESET}"
-
-# Directory section
-DIR_SECTION="${DIM}CWD:${RESET}${BLUE}${DIR_NAME}${RESET}"
+MODEL_SECTION="${SEP} ${YELLOW}${MODEL_ID}${RESET}"
 
 # Git section (branch + lines changed + sync status)
 GIT_SECTION=""
@@ -225,7 +225,7 @@ if [ -n "$GIT_BRANCH" ]; then
     if [ -n "$GIT_SYNC_STATUS" ]; then
         SYNC_PART=" ${DIM}${GIT_SYNC_STATUS}${RESET}"
     fi
-    GIT_SECTION=" ${SEP} ${DIM}Git:${RESET}${LINES_PART}${GREEN}${GIT_BRANCH}${RESET}${SYNC_PART}"
+    GIT_SECTION="${SEP} ${DIM}Git:${RESET}${LINES_PART}${GREEN}${GIT_BRANCH}${RESET}${SYNC_PART}"
 fi
 
 # Cost section
@@ -255,4 +255,4 @@ CONTEXT_SECTION="${SEP} ${DIM}Ctx:${RESET}${BAR} ${DIM}${CONTEXT_PREFIX}${CONTEX
 # ═══════════════════════════════════════════════════════════════════════════════
 # OUTPUT
 # ═══════════════════════════════════════════════════════════════════════════════
-echo -e "${SESSION_SECTION}${MODEL_SECTION} ${SEP} ${DIR_SECTION}${GIT_SECTION}${COST_SECTION}${CONTEXT_SECTION}"
+echo -e "${DIR_SECTION} ${GIT_SECTION}${SESSION_SECTION}${MODEL_SECTION}${CONTEXT_SECTION}${COST_SECTION}"
