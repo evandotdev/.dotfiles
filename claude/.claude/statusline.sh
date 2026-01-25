@@ -205,10 +205,10 @@ SEP="${DIM}│${RESET}"
 # Directory section
 DIR_SECTION="${DIM}CWD:${RESET}${BLUE}${DIR_NAME}${RESET}"
 
-# Session name/ID section
+# Session name/ID section (on its own line)
 SESSION_SECTION=""
 if [ -n "$SESSION_NAME" ]; then
-    SESSION_SECTION=" ${SEP} ${DIM}SESH:${RESET}${CYAN}${SESSION_NAME}${RESET}"
+    SESSION_SECTION="\n${DIM}SESH:${RESET}${CYAN}${SESSION_NAME}${RESET}"
 fi
 
 # Model section
@@ -255,4 +255,4 @@ CONTEXT_SECTION="${SEP} ${DIM}Ctx:${RESET}${BAR} ${DIM}${CONTEXT_PREFIX}${CONTEX
 # ═══════════════════════════════════════════════════════════════════════════════
 # OUTPUT
 # ═══════════════════════════════════════════════════════════════════════════════
-echo -e "${DIR_SECTION} ${GIT_SECTION}${SESSION_SECTION}${MODEL_SECTION}${CONTEXT_SECTION}${COST_SECTION}"
+echo -e "${DIR_SECTION} ${GIT_SECTION}${MODEL_SECTION}${CONTEXT_SECTION}${COST_SECTION}${SESSION_SECTION}"

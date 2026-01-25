@@ -1,5 +1,5 @@
 {
-  "numStartups": 277,
+  "numStartups": 278,
   "installMethod": "global",
   "verbose": true,
   "hasSeenTasksHint": true,
@@ -43,7 +43,7 @@
     "guest-passes": 276,
     "agent-flag": 277
   },
-  "promptQueueUseCount": 92,
+  "promptQueueUseCount": 93,
   "showExpandedTodos": true,
   "cachedStatsigGates": {
     "tengu_prompt_suggestion": false,
@@ -126,37 +126,37 @@
       "projectOnboardingSeenCount": 3,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 3.6686505000000005,
-      "lastAPIDuration": 403043,
-      "lastAPIDurationWithoutRetries": 403034,
-      "lastToolDuration": 882,
-      "lastDuration": 1101346,
-      "lastLinesAdded": 144,
-      "lastLinesRemoved": 71,
-      "lastTotalInputTokens": 7932,
-      "lastTotalOutputTokens": 18382,
-      "lastTotalCacheCreationInputTokens": 168116,
-      "lastTotalCacheReadInputTokens": 4318759,
+      "lastCost": 3.383318,
+      "lastAPIDuration": 133239,
+      "lastAPIDurationWithoutRetries": 133230,
+      "lastToolDuration": 4771,
+      "lastDuration": 270480,
+      "lastLinesAdded": 77,
+      "lastLinesRemoved": 28,
+      "lastTotalInputTokens": 5963,
+      "lastTotalOutputTokens": 4302,
+      "lastTotalCacheCreationInputTokens": 414878,
+      "lastTotalCacheReadInputTokens": 1371987,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 7516,
-          "outputTokens": 530,
+          "inputTokens": 5827,
+          "outputTokens": 486,
           "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.010166
+          "costUSD": 0.008257
         },
         "claude-opus-4-5-20251101": {
-          "inputTokens": 416,
-          "outputTokens": 17852,
-          "cacheReadInputTokens": 4318759,
-          "cacheCreationInputTokens": 168116,
+          "inputTokens": 136,
+          "outputTokens": 3816,
+          "cacheReadInputTokens": 1371987,
+          "cacheCreationInputTokens": 414878,
           "webSearchRequests": 0,
-          "costUSD": 3.6584845000000006
+          "costUSD": 3.375061
         }
       },
-      "lastSessionId": "9f533fee-bcd0-4bfe-9baa-512240877df0",
+      "lastSessionId": "449dfe42-e956-48e5-ac7c-6ad256ac1991",
       "reactVulnerabilityCache": {
         "detected": false,
         "package": null,
@@ -634,7 +634,7 @@
     "2ec9c7de-10cb-41bb-beb2-885b35859ae9": {
       "hasAccess": false,
       "hasAccessNotAsDefault": false,
-      "timestamp": 1769347414745
+      "timestamp": 1769351698996
     }
   },
   "lastPlanModeUse": 1769348635989,
@@ -657,7 +657,7 @@
         "referral_link": "https://claude.ai/referral/4QYUB8GqcA"
       },
       "referrer_reward": null,
-      "timestamp": 1769347379869
+      "timestamp": 1769351697550
     }
   },
   "passesUpsellSeenCount": 4,
