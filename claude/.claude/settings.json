@@ -28,6 +28,7 @@
       "WebFetch(domain:ai-sdk.dev)",
       "WebFetch(domain:*.githubusercontent.com)",
       "WebFetch(domain:*.github.com)",
+      "WebFetch(domain:www.assemblyai.com)",
       "Read(.env.example)",
       "Bash(npm run lint)",
       "Bash(npm run test:*)",
@@ -46,6 +47,8 @@
       "Bash(curl http://127.0.0.1:*)",
       "Bash(jq:*)",
       "mcp__plugin_context7_context7__query-docs",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_playwright_playwright__browser_navigate",
       "mcp__plugin_serena_serena__find_symbol",
       "mcp__plugin_serena_serena__find_file",
       "mcp__plugin_serena_serena__activate_project",
@@ -56,9 +59,13 @@
       "mcp__plugin_serena_serena__check_onboarding_performed",
       "mcp__plugin_serena_serena__list_memories",
       "mcp__plugin_serena_serena__get_symbols_overview",
-      "mcp__plugin_serena_serena__think_about_collected_information"
+      "mcp__plugin_serena_serena__think_about_collected_information",
+      "mcp__plugin_serena_serena__replace_content",
+      "mcp__plugin_serena_serena__replace_symbol_body"
     ],
     "deny": [
+      "Bash(rm -rf /)",
+      "Bash(chmod -R 777:*)",
       "Bash(git push:*)",
       "Bash(git ps:*)",
       "Bash(cat:*.env:*)",
@@ -94,7 +101,6 @@
       "Bash(gh run:*)",
       "Bash(gh cache:*)",
       "Bash(gh gist:*)",
-      "Bash(gh pr:*)",
       "Bash(gh issue:*)",
       "Bash(gh project:*)",
       "Bash(gh label:*)",
@@ -141,7 +147,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "npx -y ccstatusline@latest",
+    "command": "~/.claude/statusline.sh",
     "padding": 0
   },
   "enabledPlugins": {

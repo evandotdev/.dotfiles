@@ -5,6 +5,8 @@
 - Functions should do one thing
 - Don't abstract until you see a pattern 2-3 times
 - Avoid using magic numbers, try to create variables with meaningful names.
+- Split methods that do multiple things, try to follow single responsibility principle without creating too much overhead
+- When using
 
 # Layered Architecture (Web Backends)
 
@@ -13,6 +15,7 @@
 - Input validation, HTTP formatting, status codes
 - Throws HTTP exceptions
 - NO business logic, retries, or database access
+- Validation of query parameters belong here 
 
 ## Service
 
@@ -23,16 +26,10 @@
 ## API Client
 
 - One method = one HTTP request
-- Transform responses (e.g., snake_case → camelCase)
+- Transform responses (e.g. when calling a python backend and reading that data in typescript/javascript snake_case → camelCase depending )
 - Throws on HTTP errors
 - NO retries, fallbacks, or business decisions
-
-# Rules
-
-- Validation requiring external calls → controller
-- Retry logic → service layer
 - API clients are stateless - caller handles failures
-- Split methods that do multiple things
 
 # Misc
 
@@ -43,6 +40,7 @@
 
 # Database
 - Try to use UUID7 as database keys, instead of UUID4 as UUID7 are time-ordered so it has better performance on sorting.
+- Avoid using table level operations as they're extremely aggressive and can't be rolled back.
 
 # External/Internal API Calls
 - When making API calls to internal or external services, always add retry logic with consistent formatting and a single function or decorator if possible to standardize retry logic. This is to ensure reliability of the calls.
