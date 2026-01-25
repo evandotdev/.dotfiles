@@ -1,5 +1,5 @@
 {
-  "numStartups": 274,
+  "numStartups": 277,
   "installMethod": "global",
   "verbose": true,
   "hasSeenTasksHint": true,
@@ -40,8 +40,8 @@
     "shift-enter-setup": 781,
     "new-user-warmup": 8,
     "frontend-design-plugin": 42,
-    "guest-passes": 273,
-    "agent-flag": 262
+    "guest-passes": 276,
+    "agent-flag": 277
   },
   "promptQueueUseCount": 92,
   "showExpandedTodos": true,
@@ -349,29 +349,29 @@
         "version": null,
         "packageManager": null
       },
-      "lastCost": 0.002459,
-      "lastAPIDuration": 1266,
-      "lastAPIDurationWithoutRetries": 1265,
+      "lastCost": 0.0030789999999999997,
+      "lastAPIDuration": 1430,
+      "lastAPIDurationWithoutRetries": 1430,
       "lastToolDuration": 0,
-      "lastDuration": 118709,
+      "lastDuration": 681438,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 2394,
-      "lastTotalOutputTokens": 13,
+      "lastTotalInputTokens": 3034,
+      "lastTotalOutputTokens": 9,
       "lastTotalCacheCreationInputTokens": 0,
       "lastTotalCacheReadInputTokens": 0,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 2394,
-          "outputTokens": 13,
+          "inputTokens": 3034,
+          "outputTokens": 9,
           "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.002459
+          "costUSD": 0.0030789999999999997
         }
       },
-      "lastSessionId": "8ea1392b-037f-4c0d-8b92-3fdc08146dd7",
+      "lastSessionId": "c7e48fea-2517-4f05-a588-4f5592557f36",
       "exampleFiles": [
         "index.ts",
         "transcripts.controller.ts",

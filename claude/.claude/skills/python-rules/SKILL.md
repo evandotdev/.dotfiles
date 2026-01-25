@@ -1,7 +1,8 @@
 ---
-description: Python project conventions and best practices
-allowed-tools: Read
+description: Python project conventions and best practices. Use when writing Python code or scaffolding a new FastAPI project.
+allowed-tools: Read, Bash
 model: haiku
+argument-hint: [project-name]
 ---
 
 # Python Project Standards
@@ -62,13 +63,49 @@ settings = AppSettings()
 | API clients | `app/api/{service_name}/` | `app/api/stripe/` |
 | Internal API | `app/api/` | Routes, middleware, auth |
 
-## IP Whitelisting Middleware
-
-Add middleware to whitelist specific IPs when `whitelist_ips_enabled` is True.
-
 ## Key Principles
 
 - Use Pydantic models or dataclasses for grouped variables
 - Keep utilities as modules (`utils/env.py`) not single files (`utils.py`)
 - External API integrations get their own directory
 - All data types centralized in `model.py`
+
+---
+
+## Scaffolding a New Project
+
+If `$ARGUMENTS` is provided, create a new Python project with that name:
+
+### 1. Create project structure
+
+```
+$ARGUMENTS/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── model.py
+│   ├── routes.py
+│   ├── api/
+│   │   └── __init__.py
+│   └── utils/
+│       ├── __init__.py
+│       └── env.py
+├── tests/
+│   └── __init__.py
+├── pyproject.toml
+├── .env.example
+├── .gitignore
+└── README.md
+```
+
+### 2. Configure pyproject.toml with:
+- FastAPI + uvicorn
+- ruff for linting
+- pyright for type checking
+- pytest for testing
+
+### 3. Set up AppSettings using Pydantic
+
+### 4. Create .env.example with placeholder values
+
+### 5. Initialize git with appropriate .gitignore

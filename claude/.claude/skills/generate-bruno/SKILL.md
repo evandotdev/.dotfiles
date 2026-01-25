@@ -1,11 +1,11 @@
 ---
-description: Generate curl commands formatted for Bruno import
+description: Generate Bruno API collection with curl commands for testing endpoints.
 allowed-tools: Read
 model: haiku
 argument-hint: [api-endpoint-or-file]
 ---
 
-Generate a curl request for: $ARGUMENTS
+Generate a Bruno collection entry with curl commands for: $ARGUMENTS
 
 Format for Bruno collection import with these rules:
 

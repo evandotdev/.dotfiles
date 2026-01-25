@@ -1,5 +1,5 @@
 ---
-description: TypeScript backend conventions and best practices
+description: TypeScript backend conventions and best practices. Use when writing TypeScript APIs, services, or controllers.
 allowed-tools: Read
 model: haiku
 ---
@@ -21,7 +21,17 @@ function getUser(id: string): Promise<User | null> { }
 function getUser(id): Promise<any> { }
 ```
 
-## 2. Layer Organization
+## 2. Naming Conventions
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Request DTO | `*Request` | `CreateUserRequest` |
+| Response DTO | `*Response` | `UserResponse` |
+| API Client | `*ApiService` | `StripeApiService` |
+| Service | `*Service` | `UserService` |
+| Controller | `*Controller` | `UserController` |
+
+## 3. Layer Organization
 
 **Option A: Technical Layers** (small/mid projects)
 ```
@@ -42,7 +52,7 @@ src/
 │   └── ...
 ```
 
-## 3. Runtime Validation
+## 4. Runtime Validation
 
 TypeScript only validates at compile-time. API requests can send wrong types.
 
@@ -65,7 +75,7 @@ interface CreateUserRequest {
 const validated = typia.assert<CreateUserRequest>(req.body);
 ```
 
-## 4. Exception Handling
+## 5. Exception Handling
 
 **Do:**
 - Create custom exception classes per error type
