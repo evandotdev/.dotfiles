@@ -64,6 +64,8 @@
       "mcp__plugin_serena_serena__replace_symbol_body"
     ],
     "deny": [
+      "Bash(sops:*)",
+      "Read(*.enc*)",
       "Bash(rm -rf /)",
       "Bash(chmod -R 777:*)",
       "Bash(git push:*)",
@@ -164,10 +166,11 @@
     "supabase@claude-plugins-official": true,
     "vercel@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "serena@claude-plugins-official": true,
+    "serena@claude-plugins-official": false,
     "code-simplifier@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true
+    "pr-review-toolkit@claude-plugins-official": true,
+    "claude-mem@thedotmack": true
   },
   "feedbackSurveyState": {
     "lastShownTime": 1753939765399

@@ -299,10 +299,8 @@ ssh-add -l 2>/dev/null >/dev/null
 # if not valid, then start ssh-agent using $SSH_AUTH_SOCK
 [ $? -ge 2 ] && ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
 
-zf() {
-    local dir
-    dir=$(awk -F"|" '{print $1}' "$_Z_DATA" | fzf) && cd "$dir"
-}
+# Use fz for frecency-based directory jumping with proper ranking
+alias zf='fz'
 
 # In order for gpg to find gpg-agent, gpg-agent must be running, and there must be an env
 # variable pointing GPG to the gpg-agent socket. This little script, which must be sourced
@@ -528,3 +526,25 @@ wtc() {
     source ~/.local/bin/wtc "$@"
 }
 export PATH="$HOME/.deno/bin:$PATH"
+
+# bun completions
+[ -s "/Users/jarvis/.bun/_bun" ] && source "/Users/jarvis/.bun/_bun"
+
+# Serena MCP server (global session for Claude Code)
+export SERENA_PORT=8765
+export SERENA_URL="http://127.0.0.1:$SERENA_PORT/mcp"
+
+# test whether Serena is running
+if curl -s "http://127.0.0.1:$SERENA_PORT" >/dev/null 2>&1; then
+    echo "Serena: running on port $SERENA_PORT"
+else
+    echo "Serena: starting on port $SERENA_PORT..."
+    nohup uvx --from git+https://github.com/oraios/serena serena start-mcp-server \
+        --transport streamable-http \
+        --host 127.0.0.1 \
+        --port $SERENA_PORT \
+        --project-from-cwd \
+        --open-web-dashboard false \
+        >/dev/null 2>&1 &
+    disown
+fi
