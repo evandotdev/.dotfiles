@@ -741,6 +741,8 @@
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>KillJobsInServersOnQuit</key>
+	<false/>
 	<key>NeverWarnAboutShortLivedSessions_41FF6A97-C042-4878-9289-64E85955A0DF</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_41FF6A97-C042-4878-9289-64E85955A0DF_selection</key>
@@ -2389,6 +2391,10 @@
 			<string></string>
 		</dict>
 	</array>
+	<key>OpenArrangementAtStartup</key>
+	<false/>
+	<key>OpenNoWindowsAtStartup</key>
+	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
 	<key>PMPrintingPanelSize</key>
@@ -2435,6 +2441,8 @@
 	<key>PromptOnQuitEvenIfThereAreNoWindows</key>
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
+	<true/>
+	<key>RunJobsInServers</key>
 	<true/>
 	<key>SeparateStatusBarsPerPane</key>
 	<false/>
