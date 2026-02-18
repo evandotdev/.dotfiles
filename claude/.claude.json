@@ -1,5 +1,5 @@
 {
-  "numStartups": 401,
+  "numStartups": 405,
   "installMethod": "global",
   "preferredNotifChannel": "iterm2",
   "verbose": true,
@@ -41,12 +41,11 @@
     "shift-enter-setup": 781,
     "new-user-warmup": 8,
     "frontend-design-plugin": 42,
-    "guest-passes": 400,
+    "guest-passes": 404,
     "agent-flag": 397,
     "overage-promo": 367
   },
-  "promptQueueUseCount": 115,
-  "autoConnectIde": true,
+  "promptQueueUseCount": 116,
   "cachedStatsigGates": {
     "tengu_prompt_suggestion": false,
     "tengu_year_end_2025_campaign_promo": false,
@@ -180,10 +179,10 @@
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "lastCost": 0.000511,
-      "lastAPIDuration": 1098,
-      "lastAPIDurationWithoutRetries": 1098,
+      "lastAPIDuration": 965,
+      "lastAPIDurationWithoutRetries": 965,
       "lastToolDuration": 0,
-      "lastDuration": 114063,
+      "lastDuration": 19349,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
       "lastTotalInputTokens": 381,
@@ -201,7 +200,7 @@
           "costUSD": 0.000511
         }
       },
-      "lastSessionId": "04dd9b7f-a04a-48c3-9e95-05f636759156",
+      "lastSessionId": "78f3b479-4429-4aea-80a8-56c3826a7a46",
       "reactVulnerabilityCache": {
         "detected": false,
         "package": null,
@@ -216,16 +215,16 @@
         "plugin:github:github"
       ],
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 137,
-        "frame_duration_ms_min": 0.0453750000015134,
-        "frame_duration_ms_max": 12.729584000000614,
-        "frame_duration_ms_avg": 3.3203212189780666,
-        "frame_duration_ms_p50": 3.1601659999942058,
-        "frame_duration_ms_p95": 6.451517200001395,
-        "frame_duration_ms_p99": 10.630303119999088
+        "frame_duration_ms_count": 77,
+        "frame_duration_ms_min": 0.40158400000018446,
+        "frame_duration_ms_max": 19.404999999999745,
+        "frame_duration_ms_avg": 3.5614345714284767,
+        "frame_duration_ms_p50": 1.8577080000013666,
+        "frame_duration_ms_p95": 11.931699999999546,
+        "frame_duration_ms_p99": 16.412753080000382
       },
-      "lastFpsAverage": 1.24,
-      "lastFpsLow1Pct": 80.95
+      "lastFpsAverage": 4.7,
+      "lastFpsLow1Pct": 51.53
     },
     "/Users/jarvis/personal/youtube-transcript": {
       "allowedTools": [],
@@ -814,7 +813,7 @@
       "timestamp": 1771396768099
     }
   },
-  "lastPlanModeUse": 1771415595434,
+  "lastPlanModeUse": 1771418038359,
   "passesEligibilityCache": {
     "2ec9c7de-10cb-41bb-beb2-885b35859ae9": {
       "eligible": true,
@@ -882,7 +881,7 @@
   "showSpinnerTree": false,
   "clientDataCache": {
     "data": {},
-    "timestamp": 1771417261095
+    "timestamp": 1771418124487
   },
   "opus46FeedSeenCount": 31,
   "effortCalloutDismissed": true,

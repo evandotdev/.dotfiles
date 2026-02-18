@@ -2,6 +2,7 @@
 description: TypeScript backend conventions and best practices. Use when writing TypeScript APIs, services, or controllers.
 allowed-tools: Read
 model: haiku
+user-invocable: false
 ---
 
 # TypeScript Backend Standards

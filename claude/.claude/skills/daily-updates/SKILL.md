@@ -2,6 +2,7 @@
 description: Generate daily standup updates from git commits
 allowed-tools: Bash
 model: haiku
+argument-hint: [date (optional, e.g. "yesterday", "2024-01-15")]
 ---
 
 Run `daily-commits` and summarize by repository.

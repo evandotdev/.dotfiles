@@ -2,6 +2,7 @@
 description: Get a comprehensive overview of the current project
 allowed-tools: Read, Glob, Grep, Bash, LS
 model: sonnet
+argument-hint: [focus-area (optional, e.g. "auth", "database")]
 ---
 
 Analyze this project and answer:

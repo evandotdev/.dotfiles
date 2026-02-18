@@ -1,6 +1,6 @@
 ---
 description: Generate Bruno API collection with curl commands for testing endpoints.
-allowed-tools: Read
+allowed-tools: Read, Write
 model: haiku
 argument-hint: [api-endpoint-or-file]
 ---
