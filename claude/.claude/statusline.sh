@@ -1,6 +1,6 @@
 #!/bin/bash
 # Claude Code Status Line - Comprehensive
-# Displays: Session Name/ID | Model | Directory | Git Branch | Cost | Context % | Lines +/-
+# Displays: Session Name/ID | Model | Directory | Git Branch | Cost | Context % | Usage Limits | Lines +/-
 
 # Read JSON input from stdin
 input=$(cat)
@@ -146,6 +146,64 @@ if [ -n "$CURRENT_DIR" ] && [ -d "$CURRENT_DIR" ]; then
 fi
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# FETCH USAGE LIMITS (cached)
+# ═══════════════════════════════════════════════════════════════════════════════
+USAGE_CACHE_DIR="${TMPDIR:-$HOME/.claude}"
+USAGE_CACHE_DIR="${USAGE_CACHE_DIR%/}"
+mkdir -p "$USAGE_CACHE_DIR" 2>/dev/null
+USAGE_CACHE_FILE="$USAGE_CACHE_DIR/claude-usage-cache.json"
+USAGE_CACHE_TTL=300
+
+FIVE_HOUR_PCT=""
+SEVEN_DAY_PCT=""
+FIVE_HOUR_RESET=""
+SEVEN_DAY_RESET=""
+
+fetch_usage_data() {
+    # Return cached data if fresh
+    if [ -f "$USAGE_CACHE_FILE" ]; then
+        local cache_mtime=$(/usr/bin/stat -f "%m" "$USAGE_CACHE_FILE" 2>/dev/null || echo 0)
+        local cache_age=$(( $(date +%s) - cache_mtime ))
+        if [ "$cache_age" -lt "$USAGE_CACHE_TTL" ]; then
+            cat "$USAGE_CACHE_FILE"
+            return
+        fi
+    fi
+
+    local creds
+    creds=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null) || return 1
+
+    local token
+    token=$(echo "$creds" | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null)
+    [ -z "$token" ] && return 1
+
+    local response
+    response=$(curl -s --max-time 3 \
+        -H "Accept: application/json" \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $token" \
+        -H "anthropic-beta: oauth-2025-04-20" \
+        "https://api.anthropic.com/api/oauth/usage" 2>/dev/null)
+
+    if [ -n "$response" ] && echo "$response" | jq -e '.five_hour' > /dev/null 2>&1; then
+        echo "$response" > "$USAGE_CACHE_FILE"
+        echo "$response"
+        return
+    fi
+
+    # Stale cache fallback
+    [ -f "$USAGE_CACHE_FILE" ] && cat "$USAGE_CACHE_FILE"
+}
+
+USAGE_DATA=$(fetch_usage_data 2>/dev/null)
+if [ -n "$USAGE_DATA" ]; then
+    FIVE_HOUR_PCT=$(echo "$USAGE_DATA" | jq -r '.five_hour.utilization // empty' 2>/dev/null)
+    SEVEN_DAY_PCT=$(echo "$USAGE_DATA" | jq -r '.seven_day.utilization // empty' 2>/dev/null)
+    FIVE_HOUR_RESET=$(echo "$USAGE_DATA" | jq -r '.five_hour.resets_at // empty' 2>/dev/null)
+    SEVEN_DAY_RESET=$(echo "$USAGE_DATA" | jq -r '.seven_day.resets_at // empty' 2>/dev/null)
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # FORMAT VALUES
 # ═══════════════════════════════════════════════════════════════════════════════
 # Directory - just the basename
@@ -205,10 +263,10 @@ SEP="${DIM}│${RESET}"
 # Directory section
 DIR_SECTION="${DIM}CWD:${RESET}${BLUE}${DIR_NAME}${RESET}"
 
-# Session name/ID section (on its own line)
+# Session name/ID section
 SESSION_SECTION=""
 if [ -n "$SESSION_NAME" ]; then
-    SESSION_SECTION="\n${DIM}SESH:${RESET}${CYAN}${SESSION_NAME}${RESET}"
+    SESSION_SECTION="${SEP} ${DIM}SESH:${RESET}${CYAN}${SESSION_NAME}${RESET}"
 fi
 
 # Model section
@@ -247,7 +305,44 @@ for ((i=0; i<BAR_WIDTH; i++)); do
         BAR+="${C_BAR_EMPTY}░${RESET}"
     fi
 done
-CONTEXT_SECTION="${SEP} ${DIM}Ctx:${RESET}${BAR} ${DIM}${CONTEXT_PREFIX}${CONTEXT_PCT}% of ${MAX_K}k${RESET}"
+CONTEXT_SECTION="${DIM}Ctx:${RESET}${BAR} ${DIM}${CONTEXT_PREFIX}${CONTEXT_PCT}% of ${MAX_K}k${RESET}"
+
+# Usage limits section (5h and 7d utilization from Anthropic API)
+USAGE_SECTION=""
+if [ -n "$FIVE_HOUR_PCT" ] && [ -n "$SEVEN_DAY_PCT" ]; then
+    usage_color() {
+        local pct="${1%.*}"
+        [ -z "$pct" ] && pct=0
+        if [ "$pct" -ge 80 ]; then
+            echo "$RED"
+        elif [ "$pct" -ge 50 ]; then
+            echo "$YELLOW"
+        else
+            echo "$GREEN"
+        fi
+    }
+
+    FIVE_COLOR=$(usage_color "$FIVE_HOUR_PCT")
+    SEVEN_COLOR=$(usage_color "$SEVEN_DAY_PCT")
+
+    # Format reset countdown for 5h window
+    RESET_PART=""
+    if [ -n "$FIVE_HOUR_RESET" ]; then
+        RESET_EPOCH=$(date -d "$FIVE_HOUR_RESET" +%s 2>/dev/null || /bin/date -juf "%Y-%m-%dT%H:%M:%S" "$(echo "$FIVE_HOUR_RESET" | sed 's/\.[0-9]*+.*//')" +%s 2>/dev/null)
+        if [ -n "$RESET_EPOCH" ]; then
+            REMAINING=$(( RESET_EPOCH - $(date +%s) ))
+            if [ "$REMAINING" -gt 0 ]; then
+                RESET_H=$(( REMAINING / 3600 ))
+                RESET_M=$(( (REMAINING % 3600) / 60 ))
+                RESET_PART=" ${DIM}↻${RESET_H}h${RESET_M}m${RESET}"
+            fi
+        fi
+    fi
+
+    FIVE_DISPLAY=$(printf "%.0f" "$FIVE_HOUR_PCT")
+    SEVEN_DISPLAY=$(printf "%.0f" "$SEVEN_DAY_PCT")
+    USAGE_SECTION="${SEP} ${DIM}Use:${RESET}${FIVE_COLOR}${FIVE_DISPLAY}%${RESET}${DIM}/5h${RESET} ${SEVEN_COLOR}${SEVEN_DISPLAY}%${RESET}${DIM}/7d${RESET}${RESET_PART}"
+fi
 
 # Version section (optional - uncomment if wanted)
 # VERSION_SECTION="${SEP} ${DIM}v${VERSION}${RESET}"
@@ -255,4 +350,6 @@ CONTEXT_SECTION="${SEP} ${DIM}Ctx:${RESET}${BAR} ${DIM}${CONTEXT_PREFIX}${CONTEX
 # ═══════════════════════════════════════════════════════════════════════════════
 # OUTPUT
 # ═══════════════════════════════════════════════════════════════════════════════
-echo -e "${DIR_SECTION} ${GIT_SECTION}${MODEL_SECTION}${CONTEXT_SECTION}${COST_SECTION}${SESSION_SECTION}"
+LINE1="${DIR_SECTION} ${MODEL_SECTION}${COST_SECTION}${USAGE_SECTION}"
+LINE2="\n${CONTEXT_SECTION}${GIT_SECTION}${SESSION_SECTION}"
+echo -e "${LINE1}${LINE2}"

@@ -1,11 +1,12 @@
 {
-  "numStartups": 327,
+  "numStartups": 401,
   "installMethod": "global",
+  "preferredNotifChannel": "iterm2",
   "verbose": true,
   "hasSeenTasksHint": true,
   "tipsHistory": {
     "git-worktrees": 808,
-    "memory-command": 313,
+    "memory-command": 394,
     "theme-command": 812,
     "prompt-queue": 137,
     "enter-to-steer-in-relatime": 812,
@@ -40,11 +41,12 @@
     "shift-enter-setup": 781,
     "new-user-warmup": 8,
     "frontend-design-plugin": 42,
-    "guest-passes": 325,
-    "agent-flag": 322
+    "guest-passes": 400,
+    "agent-flag": 397,
+    "overage-promo": 367
   },
-  "promptQueueUseCount": 109,
-  "showExpandedTodos": true,
+  "promptQueueUseCount": 115,
+  "autoConnectIde": true,
   "cachedStatsigGates": {
     "tengu_prompt_suggestion": false,
     "tengu_year_end_2025_campaign_promo": false,
@@ -95,7 +97,7 @@
     "tengu_log_segment_events": false,
     "tengu_log_datadog_events": true,
     "tengu_post_compact_survey": false,
-    "tengu_streaming_tool_execution2": false,
+    "tengu_streaming_tool_execution2": true,
     "tengu_vscode_review_upsell": false,
     "tengu_vscode_onboarding": false,
     "enhanced_telemetry_beta": false,
@@ -106,25 +108,55 @@
     "tengu_sm_compact": false,
     "tengu_compact_streaming_retry": false,
     "tengu_keybinding_customization": false,
-    "tengu_claudeai_mcp_connectors": false,
+    "tengu_claudeai_mcp_connectors": true,
     "tengu_plank_river_frost": "user_intent",
     "tengu_attribution_header": true,
     "tengu_brass_pebble": false,
     "tengu_cache_plum_violet": true,
-    "tengu_file_write_optimization": false,
+    "tengu_file_write_optimization": true,
     "tengu_scarf_coffee": false,
     "tengu_keybinding_customization_release": true,
     "tengu_pr_status_cli": true,
-    "tengu_marble_kite": true,
+    "tengu_marble_kite": false,
     "tengu_kv7_prompt_sort": true,
-    "tengu_plum_vx3": false,
-    "tengu_cork_m4q": false,
+    "tengu_plum_vx3": true,
+    "tengu_cork_m4q": true,
     "tengu_marble_anvil": true,
     "tengu_tst_kx7": false,
     "tengu_coral_fern": false,
-    "tengu_system_prompt_global_cache": false,
-    "tengu_workout": false
+    "tengu_system_prompt_global_cache": true,
+    "tengu_workout": false,
+    "tengu_compact_cache_prefix": true,
+    "tengu_oboe": true,
+    "tengu_penguins_enabled": true,
+    "tengu_chomp_inflection": true,
+    "tengu_mcp_elicitation": false,
+    "tengu_penguins_off": null,
+    "tengu_copper_lantern": false,
+    "tengu_tst_names_in_messages": false,
+    "tengu_silver_lantern": false,
+    "tengu_snippet_save": false,
+    "tengu_copper_lantern_config": {
+      "meridian": "2026-02-05T07:59:00Z"
+    },
+    "tengu_vinteuil_phrase": true,
+    "tengu_marble_lantern_disabled": false,
+    "tengu_bergotte_lantern": false,
+    "tengu_fgts": false,
+    "tengu_mulberry_fog": false,
+    "tengu_prompt_cache_1h_config": {
+      "allowlist": [
+        "repl_main_thread*",
+        "sdk"
+      ]
+    },
+    "tengu_birthday_hat": false,
+    "tengu_disable_streaming_to_non_streaming_fallback": false,
+    "tengu_immediate_model_command": false,
+    "tengu_amber_prism": false,
+    "tengu_moth_copse": false
   },
+  "respectGitignore": false,
   "mcpServers": {
     "notion": {
       "type": "http",
@@ -132,7 +164,7 @@
     },
     "serena": {
       "type": "http",
-      "url": "http://127.0.0.1:${SERENA_PORT:-8765}/mcp"
+      "url": "http://127.0.0.1:8765/mcp"
     }
   },
   "userID": "094db8833101d17375c7e2b157e7e4c45c2f514c211820a30bbb81e56d531549",
@@ -147,37 +179,29 @@
       "projectOnboardingSeenCount": 4,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 0.17486600000000002,
-      "lastAPIDuration": 31648,
-      "lastAPIDurationWithoutRetries": 31639,
-      "lastToolDuration": 498,
-      "lastDuration": 37431,
+      "lastCost": 0.000511,
+      "lastAPIDuration": 1098,
+      "lastAPIDurationWithoutRetries": 1098,
+      "lastToolDuration": 0,
+      "lastDuration": 114063,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 1531,
-      "lastTotalOutputTokens": 973,
-      "lastTotalCacheCreationInputTokens": 32440,
-      "lastTotalCacheReadInputTokens": 127220,
+      "lastTotalInputTokens": 381,
+      "lastTotalOutputTokens": 26,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 0,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 1489,
-          "outputTokens": 116,
+          "inputTokens": 381,
+          "outputTokens": 26,
           "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.0020689999999999997
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 42,
-          "outputTokens": 857,
-          "cacheReadInputTokens": 127220,
-          "cacheCreationInputTokens": 32440,
-          "webSearchRequests": 0,
-          "costUSD": 0.17279700000000003
+          "costUSD": 0.000511
         }
       },
-      "lastSessionId": "ff4127ad-0ee8-4a84-9ef4-df4b3487caaf",
+      "lastSessionId": "04dd9b7f-a04a-48c3-9e95-05f636759156",
       "reactVulnerabilityCache": {
         "detected": false,
         "package": null,
@@ -186,10 +210,22 @@
         "packageManager": null
       },
       "disabledMcpServers": [
-        "myserver"
+        "myserver",
+        "plugin:stripe:stripe",
+        "plugin:supabase:supabase",
+        "plugin:github:github"
       ],
-      "lastFpsAverage": 12.09,
-      "lastFpsLow1Pct": 76.32
+      "lastSessionMetrics": {
+        "frame_duration_ms_count": 137,
+        "frame_duration_ms_min": 0.0453750000015134,
+        "frame_duration_ms_max": 12.729584000000614,
+        "frame_duration_ms_avg": 3.3203212189780666,
+        "frame_duration_ms_p50": 3.1601659999942058,
+        "frame_duration_ms_p95": 6.451517200001395,
+        "frame_duration_ms_p99": 10.630303119999088
+      },
+      "lastFpsAverage": 1.24,
+      "lastFpsLow1Pct": 80.95
     },
     "/Users/jarvis/personal/youtube-transcript": {
       "allowedTools": [],
@@ -612,39 +648,53 @@
         "version": null,
         "packageManager": null
       },
-      "lastCost": 10.978913000000006,
-      "lastAPIDuration": 1673181,
-      "lastAPIDurationWithoutRetries": 1673045,
-      "lastToolDuration": 2089559,
-      "lastDuration": 212324984,
+      "lastCost": 0.16339250000000002,
+      "lastAPIDuration": 31985,
+      "lastAPIDurationWithoutRetries": 31957,
+      "lastToolDuration": 0,
+      "lastDuration": 59018452,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 369825,
-      "lastTotalOutputTokens": 60413,
-      "lastTotalCacheCreationInputTokens": 704890,
-      "lastTotalCacheReadInputTokens": 7806553,
-      "lastTotalWebSearchRequests": 46,
+      "lastTotalInputTokens": 1324,
+      "lastTotalOutputTokens": 433,
+      "lastTotalCacheCreationInputTokens": 1742,
+      "lastTotalCacheReadInputTokens": 283808,
+      "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 265784,
-          "outputTokens": 3267,
+          "inputTokens": 1306,
+          "outputTokens": 81,
           "cacheReadInputTokens": 0,
-          "cacheCreationInputTokens": 4180,
+          "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.287344
+          "costUSD": 0.001711
         },
-        "claude-opus-4-5-20251101": {
-          "inputTokens": 104041,
-          "outputTokens": 57146,
-          "cacheReadInputTokens": 7806553,
-          "cacheCreationInputTokens": 700710,
-          "webSearchRequests": 46,
-          "costUSD": 10.691569000000003
+        "claude-opus-4-6": {
+          "inputTokens": 18,
+          "outputTokens": 352,
+          "cacheReadInputTokens": 283808,
+          "cacheCreationInputTokens": 1742,
+          "webSearchRequests": 0,
+          "costUSD": 0.1616815
         }
       },
-      "lastSessionId": "50f2386f-bdaf-49e3-8a13-40f9330b37e0",
-      "lastFpsAverage": 0.74,
-      "lastFpsLow1Pct": 21.71
+      "lastSessionId": "beb7708d-3c9d-4ab5-95f3-9f27f1961c50",
+      "disabledMcpServers": [
+        "plugin:github:github",
+        "plugin:stripe:stripe",
+        "plugin:supabase:supabase"
+      ],
+      "lastSessionMetrics": {
+        "frame_duration_ms_count": 3710,
+        "frame_duration_ms_min": 0.18599999999997863,
+        "frame_duration_ms_max": 24.56762500014156,
+        "frame_duration_ms_avg": 1.7720344627833706,
+        "frame_duration_ms_p50": 1.3331870008260012,
+        "frame_duration_ms_p95": 4.07732764994636,
+        "frame_duration_ms_p99": 10.238896909912574
+      },
+      "lastFpsAverage": 0.11,
+      "lastFpsLow1Pct": 105.42
     },
     "/Users/jarvis/personal/stock-research": {
       "allowedTools": [],
@@ -663,50 +713,95 @@
         "version": null,
         "packageManager": null
       },
-      "lastCost": 1.9900236999999998,
-      "lastAPIDuration": 765597,
-      "lastAPIDurationWithoutRetries": 765547,
-      "lastToolDuration": 351233,
-      "lastDuration": 38013279,
-      "lastLinesAdded": 0,
+      "lastCost": 4.877168499999999,
+      "lastAPIDuration": 933495,
+      "lastAPIDurationWithoutRetries": 933430,
+      "lastToolDuration": 568174,
+      "lastDuration": 2668691,
+      "lastLinesAdded": 516,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 9879,
-      "lastTotalOutputTokens": 30678,
-      "lastTotalCacheCreationInputTokens": 260102,
-      "lastTotalCacheReadInputTokens": 1077114,
-      "lastTotalWebSearchRequests": 21,
-      "lastFpsAverage": 1.41,
-      "lastFpsLow1Pct": 67.42,
+      "lastTotalInputTokens": 325162,
+      "lastTotalOutputTokens": 39605,
+      "lastTotalCacheCreationInputTokens": 378214,
+      "lastTotalCacheReadInputTokens": 1204928,
+      "lastTotalWebSearchRequests": 31,
+      "lastFpsAverage": 6.17,
+      "lastFpsLow1Pct": 44.42,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 3340,
-          "outputTokens": 162,
+          "inputTokens": 242917,
+          "outputTokens": 2170,
           "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.00415
+          "costUSD": 0.2537670000000001
         },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 6539,
-          "outputTokens": 30516,
-          "cacheReadInputTokens": 1077114,
-          "cacheCreationInputTokens": 260102,
-          "webSearchRequests": 21,
-          "costUSD": 1.9858737
+        "claude-opus-4-5-20251101": {
+          "inputTokens": 82245,
+          "outputTokens": 37435,
+          "cacheReadInputTokens": 1204928,
+          "cacheCreationInputTokens": 378214,
+          "webSearchRequests": 31,
+          "costUSD": 4.6234015
         }
       },
-      "lastSessionId": "5c22acd4-b259-48ea-8fc7-8ce5a82c1ef7"
+      "lastSessionId": "59a43630-3cb2-417e-8678-5fd00aa28bb0",
+      "hasCompletedProjectOnboarding": true
+    },
+    "/Users/jarvis/personal/research": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "lastCost": 0,
+      "lastAPIDuration": 0,
+      "lastAPIDurationWithoutRetries": 0,
+      "lastToolDuration": 0,
+      "lastDuration": 56635,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 0,
+      "lastTotalOutputTokens": 0,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 0,
+      "lastTotalWebSearchRequests": 0,
+      "lastFpsAverage": 2.62,
+      "lastFpsLow1Pct": 178.08,
+      "lastModelUsage": {},
+      "lastSessionId": "613af884-28ad-4d2e-a722-d694dbf8ad1f",
+      "hasCompletedProjectOnboarding": true,
+      "lastSessionMetrics": {
+        "frame_duration_ms_count": 146,
+        "frame_duration_ms_min": 0.06508400000166148,
+        "frame_duration_ms_max": 7.77245799999946,
+        "frame_duration_ms_avg": 1.9534061027396314,
+        "frame_duration_ms_p50": 1.4806045000004815,
+        "frame_duration_ms_p95": 4.467562249998991,
+        "frame_duration_ms_p99": 5.544012650002698
+      }
     }
   },
   "firstStartTime": "2026-01-01T13:23:33.872Z",
   "sonnet45MigrationComplete": true,
   "opus45MigrationComplete": true,
   "thinkingMigrationComplete": true,
-  "changelogLastFetched": 1769734220047,
+  "changelogLastFetched": 1771398664471,
   "claudeCodeFirstTokenDate": "2025-03-06T05:15:18.672084Z",
   "hasCompletedOnboarding": true,
   "lastOnboardingVersion": "2.0.76",
-  "lastReleaseNotesSeen": "2.1.25",
+  "lastReleaseNotesSeen": "2.1.45",
   "hasShownOpus45Notice": {
     "2ec9c7de-10cb-41bb-beb2-885b35859ae9": true
   },
@@ -716,10 +811,10 @@
     "2ec9c7de-10cb-41bb-beb2-885b35859ae9": {
       "hasAccess": false,
       "hasAccessNotAsDefault": false,
-      "timestamp": 1769732825325
+      "timestamp": 1771396768099
     }
   },
-  "lastPlanModeUse": 1769692401677,
+  "lastPlanModeUse": 1771415595434,
   "passesEligibilityCache": {
     "2ec9c7de-10cb-41bb-beb2-885b35859ae9": {
       "eligible": true,
@@ -729,14 +824,15 @@
         "referral_link": "https://claude.ai/referral/4QYUB8GqcA"
       },
       "referrer_reward": null,
-      "timestamp": 1769733033707
+      "remaining_passes": 3,
+      "timestamp": 1771417258366
     }
   },
   "passesUpsellSeenCount": 4,
   "groveConfigCache": {
     "ea984247-2b71-469a-a2fa-2d64eab5b0c2": {
       "grove_enabled": true,
-      "timestamp": 1769733034851
+      "timestamp": 1771412417225
     }
   },
   "opusProMigrationComplete": true,
@@ -747,7 +843,7 @@
     ]
   },
   "feedbackSurveyState": {
-    "lastShownTime": 1769578904509
+    "lastShownTime": 1770005946921
   },
   "skillUsage": {
     "code-review:code-review": {
@@ -755,10 +851,15 @@
       "lastUsedAt": 1768992202723
     },
     "jina-fetch": {
-      "usageCount": 3,
-      "lastUsedAt": 1769568902806
+      "usageCount": 6,
+      "lastUsedAt": 1771398352625
+    },
+    "statusline": {
+      "usageCount": 1,
+      "lastUsedAt": 1771397958753
     }
   },
+  "anonymousId": "claudecode.v1.022596b2-6ca2-4f73-a4d0-b2900a82caac",
   "oauthAccount": {
     "accountUuid": "ea984247-2b71-469a-a2fa-2d64eab5b0c2",
     "emailAddress": "REDACTED@example.com",
@@ -767,7 +868,24 @@
     "displayName": "Evan",
     "organizationRole": "admin",
     "workspaceRole": null,
-    "organizationName": "REDACTED@example.com's Organization"
+    "organizationName": "REDACTED@example.com's Organization",
+    "billingType": "stripe_subscription",
+    "accountCreatedAt": "2024-07-01T09:06:34.436159Z",
+    "subscriptionCreatedAt": "2025-06-10T19:34:16.375535Z"
   },
-  "anonymousId": "claudecode.v1.022596b2-6ca2-4f73-a4d0-b2900a82caac"
+  "penguinModeOrgEnabled": false,
+  "hasVisitedPasses": false,
+  "passesLastSeenRemaining": 3,
+  "hasShownOpus46Notice": {
+    "2ec9c7de-10cb-41bb-beb2-885b35859ae9": true
+  },
+  "showSpinnerTree": false,
+  "clientDataCache": {
+    "data": {},
+    "timestamp": 1771417261095
+  },
+  "opus46FeedSeenCount": 31,
+  "effortCalloutDismissed": true,
+  "sonnet1m45MigrationComplete": true,
+  "cachedExtraUsageDisabledReason": "org_level_disabled"
 }
