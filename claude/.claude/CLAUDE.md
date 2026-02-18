@@ -1,3 +1,6 @@
+# Research
+- When asked to perform research, always place the output of your research (e.g. Markdown files, etc.) in `~/personal/research`
+
 # Code Style
 
 - Avoid comments unless the "why" isn't obvious from the code
@@ -6,7 +9,6 @@
 - Don't abstract until you see a pattern 2-3 times
 - Avoid using magic numbers, try to create variables with meaningful names.
 - Split methods that do multiple things, try to follow single responsibility principle without creating too much overhead
-- When using
 
 # Layered Architecture (Web Backends)
 
