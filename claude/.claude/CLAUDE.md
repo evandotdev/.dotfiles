@@ -47,6 +47,16 @@
 # External/Internal API Calls
 - When making API calls to internal or external services, always add retry logic with consistent formatting and a single function or decorator if possible to standardize retry logic. This is to ensure reliability of the calls.
 
+# Code Search Online
+
+When looking for code examples, API usage, library documentation, SDK patterns, or debugging help from the web, prefer the `get-code-context-exa` skill over WebSearch/WebFetch:
+
+```
+/get-code-context-exa
+```
+
+Use `web-search-researcher` for non-code research (articles, comparisons, general information) or when Exa results are insufficient.
+
 # Codebase Exploration with Serena
 
 When exploring or searching codebases, prefer Serena's semantic tools over traditional grep/glob/Task agents:
