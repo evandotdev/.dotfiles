@@ -1,0 +1,417 @@
+#!/usr/bin/env bash
+#
+# fork-claude - Fork a Claude Code conversation into a new iTerm2 tab
+#
+# Clones the conversation's .jsonl file with fresh UUIDs, then opens
+# claude --resume <fork-uuid> in a new iTerm2 tab automatically.
+#
+# Usage:
+#   fork-claude                       # Interactive fzf session picker
+#   fork-claude <session-uuid>        # Fork a specific session
+#   fork-claude <session-uuid> <path> # Fork with explicit project path
+#
+
+set -euo pipefail
+
+CLAUDE_DIR="${HOME}/.claude"
+PROJECTS_DIR="${CLAUDE_DIR}/projects"
+HISTORY_FILE="${CLAUDE_DIR}/history.jsonl"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+log_info()    { echo -e "${BLUE}[INFO]${NC} $1"; }
+log_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
+log_error()   { echo -e "${RED}[ERROR]${NC} $1" >&2; }
+
+usage() {
+    echo "Usage:"
+    echo "  $0                        Interactive session picker (requires fzf)"
+    echo "  $0 <session-uuid>         Fork a specific session"
+    echo "  $0 <session-uuid> <path>  Fork with explicit project path"
+    exit 1
+}
+
+generate_uuid() {
+    if command -v uuidgen &>/dev/null; then
+        uuidgen | tr '[:upper:]' '[:lower:]'
+    elif [[ -r /proc/sys/kernel/random/uuid ]]; then
+        cat /proc/sys/kernel/random/uuid
+    else
+        printf '%04x%04x-%04x-%04x-%04x-%04x%04x%04x\n' \
+            $((RANDOM)) $((RANDOM)) $((RANDOM)) \
+            $((RANDOM & 0x0fff | 0x4000)) \
+            $((RANDOM & 0x3fff | 0x8000)) \
+            $((RANDOM)) $((RANDOM)) $((RANDOM))
+    fi
+}
+
+convert_path_to_dirname() {
+    echo "$1" | sed 's|^/||' | sed 's|/|-|g' | sed 's|^|-|'
+}
+
+find_conversation_file() {
+    local session_id="$1"
+    local project_path="$2"
+
+    if [[ -n "$project_path" ]]; then
+        local project_dirname
+        project_dirname=$(convert_path_to_dirname "$project_path")
+        local conv_file="${PROJECTS_DIR}/${project_dirname}/${session_id}.jsonl"
+        [[ -f "$conv_file" ]] && echo "$conv_file" && return 0
+    fi
+
+    local found
+    found=$(find "$PROJECTS_DIR" -name "${session_id}.jsonl" 2>/dev/null | head -1)
+    [[ -n "$found" ]] && echo "$found" && return 0
+
+    return 1
+}
+
+pre_generate_uuids() {
+    local count="$1"
+    local output_file="$2"
+
+    if command -v hexdump &>/dev/null; then
+        # Set version nibble (pos 15) to '4' and variant nibble (pos 20) to '8'
+        # so output conforms to UUIDv4 format
+        hexdump -vn $((count * 16)) \
+            -e '4/1 "%02x" "-" 2/1 "%02x" "-" 2/1 "%02x" "-" 2/1 "%02x" "-" 6/1 "%02x" "\n"' \
+            /dev/urandom \
+            | sed -E 's/^([0-9a-f]{8}-[0-9a-f]{4}-)[0-9a-f]/\14/' \
+            | sed -E 's/^([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-)[0-9a-f]/\18/' \
+            > "$output_file"
+    elif command -v uuidgen &>/dev/null; then
+        for ((i=0; i<count; i++)); do
+            uuidgen | tr '[:upper:]' '[:lower:]'
+        done > "$output_file"
+    else
+        log_error "No UUID generation method available (need hexdump or uuidgen)"
+        return 1
+    fi
+}
+
+
+# Globals
+PICKED_SESSION_ID=""
+PICKED_PROJECT_PATH=""
+FORK_NAME=""
+
+pick_session() {
+    if ! command -v fzf &>/dev/null; then
+        log_error "fzf required for interactive mode. Install: brew install fzf"
+        log_info "Or pass a session UUID directly: fork-claude <uuid>"
+        exit 1
+    fi
+
+    if ! command -v jq &>/dev/null; then
+        log_error "jq required for interactive mode. Install: brew install jq"
+        exit 1
+    fi
+
+    [[ ! -f "$HISTORY_FILE" ]] && { log_error "No history file at $HISTORY_FILE"; exit 1; }
+
+    local now
+    now=$(date +%s)
+
+    # Build session_id → customTitle lookup from two sources:
+    #   1. Conversation .jsonl files — contain {"type":"custom-title","customTitle":"..."} entries
+    #   2. sessions-index.json — contains .entries[].customTitle for some sessions
+    # Source 1 is checked first; source 2 fills in anything missing.
+    local names_file
+    names_file=$(mktemp)
+    {
+        grep -rh '"type":"custom-title"' "$PROJECTS_DIR" --include="*.jsonl" 2>/dev/null \
+            | jq -r 'select(.customTitle) | [.sessionId, .customTitle] | @tsv' 2>/dev/null
+        find "$PROJECTS_DIR" -name "sessions-index.json" 2>/dev/null \
+            -exec jq -r '.entries[] | select(.customTitle) | [.sessionId, .customTitle] | @tsv' {} \; \
+            2>/dev/null
+    } > "$names_file"
+
+    # Parse history.jsonl:
+    #   - Strip newlines/tabs from display text so it renders on one line
+    #   - Sort by timestamp descending
+    #   - Deduplicate by sessionId (awk !seen[]), keeping the most recent entry
+    #   - Format: "name › message  OR  message \t uuid \t project"
+    local selected
+    selected=$(jq -r '
+        [
+            (.timestamp / 1000 | floor | tostring),
+            .sessionId,
+            (.project // ""),
+            (.display // "(unnamed)" | gsub("[\\t\\n\\r]"; " ") | ltrimstr(" ") | .[0:100])
+        ] | @tsv
+    ' "$HISTORY_FILE" 2>/dev/null \
+    | sort -rn \
+    | awk -v now="$now" -v names_file="$names_file" '
+        BEGIN {
+            FS = OFS = "\t"
+            while ((getline line < names_file) > 0) {
+                n = split(line, parts, "\t")
+                if (n >= 2 && !(parts[1] in session_names))
+                    session_names[parts[1]] = parts[2]
+            }
+            close(names_file)
+        }
+        !seen[$2]++ {
+            diff = now - $1
+            if (diff < 60)         ago = "just now"
+            else if (diff < 3600)  ago = int(diff / 60) " min ago"
+            else if (diff < 86400) ago = int(diff / 3600) " hr ago"
+            else                   ago = int(diff / 86400) " day" (int(diff / 86400) > 1 ? "s" : "") " ago"
+            name = session_names[$2]
+            if (name != "")
+                display = name " › " $4
+            else
+                display = $4
+            printf "%-13s  %s\t%s\t%s\n", ago, display, $2, $3
+        }
+    ' \
+    | fzf \
+        --delimiter='\t' \
+        --with-nth=1 \
+        --height=60% \
+        --layout=reverse \
+        --border=rounded \
+        --header="  Claude sessions — select one to fork  (ESC to cancel)" \
+        --prompt="  Search: " \
+        --pointer="▶" \
+        --preview='
+            uuid=$(printf "%s" {} | cut -f2)
+            project=$(printf "%s" {} | cut -f3)
+            printf "Session: %s\nProject: %s\n" "$uuid" "$project"
+        ' \
+        --preview-window='bottom:3:wrap' \
+        --color="header:italic,header:dim" \
+        || true)
+
+    rm -f "$names_file"
+
+    [[ -z "$selected" ]] && { log_info "Cancelled."; exit 0; }
+
+    PICKED_SESSION_ID=$(printf "%s" "$selected" | cut -f2)
+    PICKED_PROJECT_PATH=$(printf "%s" "$selected" | cut -f3)
+}
+
+fork_conversation() {
+    local source_session="$1"
+    local project_path="$2"
+
+    local fork_tag
+    if [[ -n "$FORK_NAME" ]]; then
+        fork_tag="[$FORK_NAME]"
+    else
+        local fork_timestamp
+        fork_timestamp=$(date "+%b %-d %H:%M")
+        fork_tag="[FORK ${fork_timestamp}]"
+    fi
+
+    local source_file
+    if ! source_file=$(find_conversation_file "$source_session" "$project_path"); then
+        log_error "Could not find conversation for session: $source_session"
+        log_info "Searched in: ${PROJECTS_DIR}"
+        exit 1
+    fi
+
+    log_info "Source: $source_file"
+
+    if [[ -z "$project_path" ]]; then
+        # Prefer the project field stored in history.jsonl — the directory name
+        # encoding is lossy for paths that contain hyphens, so this is more accurate
+        if command -v jq &>/dev/null && [[ -f "$HISTORY_FILE" ]]; then
+            project_path=$(jq -r --arg sid "$source_session" \
+                'select(.sessionId == $sid) | .project' \
+                "$HISTORY_FILE" 2>/dev/null | tail -1)
+        fi
+        # Fall back to decoding the directory name (lossy for hyphenated dirs)
+        if [[ -z "$project_path" ]]; then
+            local dir_name
+            dir_name=$(basename "$(dirname "$source_file")")
+            project_path=$(echo "$dir_name" | sed 's|^-|/|' | sed 's|-|/|g')
+        fi
+    fi
+
+    local new_session
+    new_session=$(generate_uuid)
+    log_info "Fork UUID: $new_session"
+
+    # Use the same directory as the source file — avoids re-encoding project_path
+    # and any mismatch with how Claude Code encodes paths (e.g. dots → dashes)
+    local project_dir
+    project_dir=$(dirname "$source_file")
+    local target_file="${project_dir}/${new_session}.jsonl"
+
+    mkdir -p "$project_dir"
+
+    local total_lines
+    total_lines=$(wc -l < "$source_file")
+    local uuid_file
+    uuid_file=$(mktemp)
+    # shellcheck disable=SC2064
+    trap "rm -f -- $(printf '%q' "$uuid_file")" EXIT
+
+    pre_generate_uuids $(( total_lines * 3 + 100 )) "$uuid_file"
+
+    awk -v new_session="$new_session" \
+        -v fork_tag="$fork_tag" \
+        -v uuid_file="$uuid_file" '
+    BEGIN {
+        first_user = 1
+        while ((getline uuid < uuid_file) > 0) {
+            uuids[next_uuid++] = uuid
+        }
+        close(uuid_file)
+        next_uuid = 0
+    }
+
+    function get_new_uuid(old_uuid) {
+        if (old_uuid in uuid_map) return uuid_map[old_uuid]
+        new_uuid = uuids[next_uuid++]
+        uuid_map[old_uuid] = new_uuid
+        return new_uuid
+    }
+
+    # Literal (non-regex) first-occurrence replacement using index()+substr()
+    function replace_literal(haystack, needle, replacement,    pos) {
+        pos = index(haystack, needle)
+        if (pos == 0) return haystack
+        return substr(haystack, 1, pos - 1) replacement substr(haystack, pos + length(needle))
+    }
+
+    function extract_uuid(line, key,    pattern, match_str, result) {
+        pattern = "\"" key "\":\"[a-f0-9][a-f0-9-]*[a-f0-9]\""
+        if (match(line, pattern)) {
+            result = substr(line, RSTART, RLENGTH)
+            gsub("\"" key "\":\"", "", result)
+            gsub("\"", "", result)
+            return result
+        }
+        return ""
+    }
+
+    /^$/ { next }
+
+    {
+        line = $0
+
+        old_session = extract_uuid(line, "sessionId")
+        if (old_session != "")
+            line = replace_literal(line, "\"sessionId\":\"" old_session "\"", "\"sessionId\":\"" new_session "\"")
+
+        if (match(line, /"uuid":"[a-f0-9][a-f0-9-]*[a-f0-9]"/)) {
+            match_str = substr(line, RSTART, RLENGTH)
+            old_uuid = match_str
+            gsub("\"uuid\":\"", "", old_uuid)
+            gsub("\"", "", old_uuid)
+            line = replace_literal(line, "\"uuid\":\"" old_uuid "\"", "\"uuid\":\"" get_new_uuid(old_uuid) "\"")
+        }
+
+        old_parent = extract_uuid(line, "parentUuid")
+        if (old_parent != "")
+            line = replace_literal(line, "\"parentUuid\":\"" old_parent "\"", "\"parentUuid\":\"" get_new_uuid(old_parent) "\"")
+
+        old_msgid = extract_uuid(line, "messageId")
+        if (old_msgid != "")
+            line = replace_literal(line, "\"messageId\":\"" old_msgid "\"", "\"messageId\":\"" get_new_uuid(old_msgid) "\"")
+
+        # Tag only the first occurrence of the text field in the first user message
+        if (first_user && index(line, "\"type\":\"user\"") > 0) {
+            if (index(line, "\"text\":\"") > 0)
+                line = replace_literal(line, "\"text\":\"", "\"text\":\"" fork_tag " ")
+            else
+                line = replace_literal(line, "\"content\":\"", "\"content\":\"" fork_tag " ")
+            first_user = 0
+        }
+
+        print line
+    }
+    ' "$source_file" > "$target_file"
+
+    touch "$target_file"
+
+    local display_text
+    if [[ -n "$FORK_NAME" ]]; then
+        # Named fork: use the name directly as display (matches how claude -r shows named sessions)
+        display_text="$FORK_NAME"
+    else
+        display_text=$(jq -r '
+            select(.type == "user") |
+            if .message.content then
+                (.message.content | if type == "array" then map(select(.type=="text") | .text) | join("") else . end)
+            elif .message.text then .message.text
+            elif .content then .content
+            elif .text then .text
+            else empty
+            end
+        ' "$source_file" 2>/dev/null | head -1 | head -c 200 || true)
+        [[ -z "$display_text" ]] && display_text="[Forked conversation]"
+        display_text="${fork_tag} ${display_text}"
+    fi
+
+    local timestamp
+    timestamp=$(( $(date +%s) * 1000 + 1000 ))
+
+    # Use jq to construct JSON so all fields are properly escaped
+    jq -nc \
+        --arg display "$display_text" \
+        --arg project "$project_path" \
+        --arg session "$new_session" \
+        --argjson ts "$timestamp" \
+        '{display: $display, pastedContents: {}, timestamp: $ts, project: $project, sessionId: $session}' \
+        >> "$HISTORY_FILE"
+
+    log_success "Forked successfully"
+    echo ""
+    echo "  Original: $source_session"
+    echo "  Fork:     $new_session"
+    echo "  Project:  $project_path"
+    echo ""
+
+    exec claude --resume "$new_session"
+}
+
+# --- Main ---
+
+[[ ! -d "$CLAUDE_DIR" ]] && { log_error "~/.claude not found"; exit 1; }
+
+# Parse flags
+POSITIONAL_ARGS=()
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -n|--name)
+            FORK_NAME="$2"
+            shift 2
+            ;;
+        *)
+            POSITIONAL_ARGS+=("$1")
+            shift
+            ;;
+    esac
+done
+set -- "${POSITIONAL_ARGS[@]+"${POSITIONAL_ARGS[@]}"}"
+
+if [[ $# -eq 0 ]]; then
+    pick_session
+    SESSION_ID="$PICKED_SESSION_ID"
+    PROJECT_PATH="$PICKED_PROJECT_PATH"
+    if ! [[ "$SESSION_ID" =~ ^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$ ]]; then
+        log_error "Picker returned invalid session UUID: $SESSION_ID"
+        exit 1
+    fi
+elif [[ $# -ge 1 ]]; then
+    SESSION_ID="$1"
+    PROJECT_PATH="${2:-}"
+    if ! [[ "$SESSION_ID" =~ ^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$ ]]; then
+        log_error "Invalid session UUID format. Expected: d96c899d-7501-4e81-a31b-e0095bb3b501"
+        exit 1
+    fi
+fi
+
+# Prompt for name if not provided via --name flag
+if [[ -z "$FORK_NAME" ]]; then
+    read -rp "  Fork name (optional, Enter to skip): " FORK_NAME </dev/tty
+fi
+
+fork_conversation "$SESSION_ID" "$PROJECT_PATH"
