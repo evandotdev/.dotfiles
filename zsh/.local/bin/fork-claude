@@ -148,6 +148,8 @@ pick_session() {
     | awk -v now="$now" -v names_file="$names_file" '
         BEGIN {
             FS = OFS = "\t"
+            RED   = "\033[31m"
+            RESET = "\033[0m"
             while ((getline line < names_file) > 0) {
                 n = split(line, parts, "\t")
                 if (n >= 2 && !(parts[1] in session_names))
@@ -163,13 +165,14 @@ pick_session() {
             else                   ago = int(diff / 86400) " day" (int(diff / 86400) > 1 ? "s" : "") " ago"
             name = session_names[$2]
             if (name != "")
-                display = name " › " $4
+                display = RED name RESET " › " $4
             else
                 display = $4
             printf "%-13s  %s\t%s\t%s\n", ago, display, $2, $3
         }
     ' \
     | fzf \
+        --ansi \
         --delimiter='\t' \
         --with-nth=1 \
         --height=60% \
