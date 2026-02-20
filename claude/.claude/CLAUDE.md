@@ -57,22 +57,6 @@ When looking for code examples, API usage, library documentation, SDK patterns, 
 
 Use `web-search-researcher` for non-code research (articles, comparisons, general information) or when Exa results are insufficient.
 
-# Codebase Exploration with Serena
-
-When exploring or searching codebases, prefer Serena's semantic tools over traditional grep/glob/Task agents:
-
-**Use Serena for:**
-- Finding symbols by name: `find_symbol` with name patterns
-- Understanding file structure: `get_symbols_overview`
-- Tracing symbol usage: `find_referencing_symbols`
-- Flexible pattern search: `search_for_pattern`
-- Reading symbol bodies: `find_symbol` with `include_body=True`
-
-**Fall back to codebase-locator/codebase-analyzer agents for:**
-- Finding non-code files (configs, docs, assets)
-- Quick file path discovery without semantic analysis
-- Projects where Serena LSP isn't configured
-
 # Git
 - Check if you are working in a bare git repository.
   - If you are in a bare git repository, whenever working on a new feature, bugfix, enhancement, etc. use the commands from `~/.local/bin`
