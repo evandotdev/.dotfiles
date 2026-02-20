@@ -1,9 +1,8 @@
 ---
-description: Python project conventions and best practices. Use when writing Python code or scaffolding a new FastAPI project.
+description: Python project conventions and best practices. Use when writing, editing, refactoring Python code or scaffolding a new FastAPI project.
 allowed-tools: Read, Bash
 model: haiku
-argument-hint: [project-name]
-user-invocable: false
+user-invocable: true
 ---
 
 # Python Project Standards
@@ -52,7 +51,9 @@ class AppSettings(BaseSettings):
     class Config:
         env_file = ".env"
 
-settings = AppSettings()
+@lru_cache(maxsize=1)
+def get_settings() -> AppSettings:
+    return AppSettings()
 ```
 
 ## Naming Conventions
@@ -62,20 +63,20 @@ settings = AppSettings()
 | Request DTO | `*Request` | `CreateUserRequest` |
 | Response DTO | `*Response` | `UserResponse` |
 | API clients | `app/api/{service_name}/` | `app/api/stripe/` |
-| Internal API | `app/api/` | Routes, middleware, auth |
+| Internal API | `app/api/{routes,middleware,auth}` | Routes, middleware, auth |
 
 ## Key Principles
 
-- Use Pydantic models or dataclasses for grouped variables
+- Use Pydantic models or dataclasses for grouped variables, place these inside of `model.py` for each module
 - Keep utilities as modules (`utils/env.py`) not single files (`utils.py`)
 - External API integrations get their own directory
-- All data types centralized in `model.py`
+- All data types centralized in `model.py` in each module
+- No magic numbers
+- Depending on the requirements, consult the <software design skill>
 
 ---
 
 ## Scaffolding a New Project
-
-If `$ARGUMENTS` is provided, create a new Python project with that name:
 
 ### 1. Create project structure
 
