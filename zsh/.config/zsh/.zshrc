@@ -530,21 +530,3 @@ export PATH="$HOME/.deno/bin:$PATH"
 # bun completions
 [ -s "/Users/jarvis/.bun/_bun" ] && source "/Users/jarvis/.bun/_bun"
 
-# Serena MCP server (global session for Claude Code)
-export SERENA_PORT=8765
-export SERENA_URL="http://127.0.0.1:$SERENA_PORT/mcp"
-
-# test whether Serena is running
-if curl -s "http://127.0.0.1:$SERENA_PORT" >/dev/null 2>&1; then
-    echo "Serena: running on port $SERENA_PORT"
-else
-    echo "Serena: starting on port $SERENA_PORT..."
-    nohup uvx --from git+https://github.com/oraios/serena serena start-mcp-server \
-        --transport streamable-http \
-        --host 127.0.0.1 \
-        --port $SERENA_PORT \
-        --project-from-cwd \
-        --open-web-dashboard false \
-        >/dev/null 2>&1 &
-    disown
-fi

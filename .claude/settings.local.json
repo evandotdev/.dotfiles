@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:developers.openai.com)",
+      "WebFetch(domain:gemini.google)",
+      "WebFetch(domain:ast-grep.github.io)",
+      "mcp__exa__get_code_context_exa",
+      "WebFetch(domain:api.github.com)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:google-gemini.github.io)",
+      "Skill(ast-grep)"
+    ]
+  },
+  "outputStyle": "Explanatory",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  }
+}
