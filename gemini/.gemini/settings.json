@@ -1,0 +1,72 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    },
+    "disableYoloMode": true,
+    "environmentVariableRedaction": {
+      "enabled": true
+    }
+  },
+  "model": {
+    "name": "auto-gemini-3"
+  },
+  "general": {
+    "defaultApprovalMode": "default",
+    "enableAutoUpdate": false,
+    "enablePromptCompletion": true,
+    "previewFeatures": true
+  },
+  "ui": {
+    "inlineThinkingMode": "full",
+    "footer": {
+      "hideContextPercentage": false
+    },
+    "showMemoryUsage": true,
+    "showLineNumbers": true,
+    "showModelInfoInChat": true,
+    "showUserIdentity": true
+  },
+  "experimental": {
+    "plan": true
+  },
+  "mcpServers": {
+    "exa": {
+      "type": "http",
+      "url": "https://mcp.exa.ai/mcp?tools=get_code_context_exa"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    }
+  },
+  "tools": {
+    "allowed": [
+      "run_shell_command(git log)",
+      "run_shell_command(git diff)",
+      "run_shell_command(git status)",
+      "run_shell_command(git fetch)",
+      "run_shell_command(git pull)",
+      "run_shell_command(git stash)",
+      "run_shell_command(git branch)",
+      "run_shell_command(git worktree)",
+      "run_shell_command(git show)",
+      "run_shell_command(gh pr view)",
+      "run_shell_command(gh pr diff)",
+      "run_shell_command(gh pr list)",
+      "run_shell_command(gh repo view)",
+      "run_shell_command(gh issue view)",
+      "run_shell_command(gh pr checks)",
+      "run_shell_command(npm run)",
+      "run_shell_command(pytest)",
+      "run_shell_command(ruff)",
+      "run_shell_command(pylint)",
+      "run_shell_command(pyright)",
+      "run_shell_command(docker compose)",
+      "run_shell_command(docker ps)",
+      "run_shell_command(docker logs)",
+      "run_shell_command(jq)",
+      "run_shell_command(curl)"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+model = "gpt-5.3-codex"
+model_reasoning_effort = "xhigh"
+
+[projects."/Users/jarvis/.dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/jarvis/personal/tomoro-ai-REDACTED_USERcy"]
+trust_level = "trusted"
+
+[projects."/Users/jarvis/personal/REDACTED_USERcy"]
+trust_level = "trusted"
+
+[projects."/Users/jarvis/personal/tomoro-ai-assignment-1"]
+trust_level = "trusted"
+
+[features]
+multi_agent = true

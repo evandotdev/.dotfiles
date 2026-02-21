@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 source ./shared_vars
 for loc in "${STOW_FOLDERS[@]}"; do
-	stow -vD $loc
-	stow -v $loc
+	stow -vD "$loc"
+	if [[ "$loc" == "codex" ]]; then
+		stow -v --adopt "$loc"
+	else
+		stow -v "$loc"
+	fi
 	echo
 done
 
