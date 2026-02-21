@@ -1,6 +1,6 @@
 ---
 name: ast-grep
-description: "Structural code search, lint, and rewrite using AST patterns. Use for finding code patterns, refactoring, renaming, and applying codemod transformations across codebases."
+description: "Structural code search, lint, and rewrite using AST patterns. Use for finding code patterns, functions, references, symbols, assignments, refactoring, renaming, and applying codemod transformations across codebases."
 allowed-tools: Bash, Read, Glob, Grep, Write
 model: sonnet
 argument-hint: "[search/rewrite task description]"
