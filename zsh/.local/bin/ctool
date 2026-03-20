@@ -176,6 +176,7 @@ fork_session() {
     local session_id="$1"
     local project_path="$2"
     local fork_name="$3"
+    local target_dir="${4:-}"
 
     local fork_tag
     if [[ -n "$fork_name" ]]; then
@@ -205,12 +206,23 @@ fork_session() {
         fi
     fi
 
+    if [[ -n "$target_dir" ]]; then
+        project_path="$target_dir"
+        log_info "Target dir: $target_dir"
+    fi
+
     local new_session
     new_session=$(generate_uuid)
     log_info "Fork UUID: $new_session"
 
     local project_dir
-    project_dir=$(dirname "$source_file")
+    if [[ -n "$target_dir" ]]; then
+        local target_dirname
+        target_dirname=$(convert_path_to_dirname "$target_dir")
+        project_dir="${PROJECTS_DIR}/${target_dirname}"
+    else
+        project_dir=$(dirname "$source_file")
+    fi
     local target_file="${project_dir}/${new_session}.jsonl"
     mkdir -p "$project_dir"
 
@@ -308,6 +320,9 @@ fork_session() {
         >> "$HISTORY_FILE"
 
     log_success "Forked: $new_session"
+    if [[ -n "$target_dir" ]]; then
+        cd "$target_dir"
+    fi
     exec claude --resume "$new_session"
 }
 
@@ -362,7 +377,15 @@ while true; do
             ;;
         *)
             read -rp "  Fork name (optional, Enter to skip): " FORK_NAME </dev/tty
-            fork_session "$SESSION_ID" "$PROJECT_PATH" "${FORK_NAME:-}"
+            read -rp "  Target dir (Enter for same): " FORK_TARGET_DIR </dev/tty
+            if [[ -n "$FORK_TARGET_DIR" ]]; then
+                if ! resolved_dir=$(cd "$FORK_TARGET_DIR" 2>/dev/null && pwd); then
+                    log_error "Target directory does not exist: $FORK_TARGET_DIR"
+                    continue
+                fi
+                FORK_TARGET_DIR="$resolved_dir"
+            fi
+            fork_session "$SESSION_ID" "$PROJECT_PATH" "${FORK_NAME:-}" "${FORK_TARGET_DIR:-}"
             # exec claude inside fork_session — never reaches here
             ;;
     esac

@@ -31,6 +31,10 @@ usage() {
     echo "  $0                        Interactive session picker (requires fzf)"
     echo "  $0 <session-uuid>         Fork a specific session"
     echo "  $0 <session-uuid> <path>  Fork with explicit project path"
+    echo ""
+    echo "Options:"
+    echo "  -n, --name <name>         Name the forked session"
+    echo "  -d, --dir <path>          Target directory for the fork (default: same as source)"
     exit 1
 }
 
@@ -201,6 +205,7 @@ pick_session() {
 fork_conversation() {
     local source_session="$1"
     local project_path="$2"
+    local target_dir="${3:-}"
 
     local fork_tag
     if [[ -n "$FORK_NAME" ]]; then
@@ -221,14 +226,11 @@ fork_conversation() {
     log_info "Source: $source_file"
 
     if [[ -z "$project_path" ]]; then
-        # Prefer the project field stored in history.jsonl — the directory name
-        # encoding is lossy for paths that contain hyphens, so this is more accurate
         if command -v jq &>/dev/null && [[ -f "$HISTORY_FILE" ]]; then
             project_path=$(jq -r --arg sid "$source_session" \
                 'select(.sessionId == $sid) | .project' \
                 "$HISTORY_FILE" 2>/dev/null | tail -1)
         fi
-        # Fall back to decoding the directory name (lossy for hyphenated dirs)
         if [[ -z "$project_path" ]]; then
             local dir_name
             dir_name=$(basename "$(dirname "$source_file")")
@@ -236,14 +238,26 @@ fork_conversation() {
         fi
     fi
 
+    # When a target directory is specified, override project_path and project_dir
+    if [[ -n "$target_dir" ]]; then
+        project_path="$target_dir"
+        log_info "Target dir: $target_dir"
+    fi
+
     local new_session
     new_session=$(generate_uuid)
     log_info "Fork UUID: $new_session"
 
-    # Use the same directory as the source file — avoids re-encoding project_path
-    # and any mismatch with how Claude Code encodes paths (e.g. dots → dashes)
     local project_dir
-    project_dir=$(dirname "$source_file")
+    if [[ -n "$target_dir" ]]; then
+        local target_dirname
+        target_dirname=$(convert_path_to_dirname "$target_dir")
+        project_dir="${PROJECTS_DIR}/${target_dirname}"
+    else
+        # Use the same directory as the source file — avoids re-encoding project_path
+        # and any mismatch with how Claude Code encodes paths (e.g. dots → dashes)
+        project_dir=$(dirname "$source_file")
+    fi
     local target_file="${project_dir}/${new_session}.jsonl"
 
     mkdir -p "$project_dir"
@@ -372,6 +386,9 @@ fork_conversation() {
     echo "  Project:  $project_path"
     echo ""
 
+    if [[ -n "$target_dir" ]]; then
+        cd "$target_dir"
+    fi
     exec claude --resume "$new_session"
 }
 
@@ -381,11 +398,19 @@ fork_conversation() {
 
 # Parse flags
 POSITIONAL_ARGS=()
+TARGET_DIR=""
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -n|--name)
             FORK_NAME="$2"
             shift 2
+            ;;
+        -d|--dir)
+            TARGET_DIR="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
             ;;
         *)
             POSITIONAL_ARGS+=("$1")
@@ -394,6 +419,15 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 set -- "${POSITIONAL_ARGS[@]+"${POSITIONAL_ARGS[@]}"}"
+
+# Validate and canonicalize target directory if provided
+if [[ -n "$TARGET_DIR" ]]; then
+    if ! resolved_dir=$(cd "$TARGET_DIR" 2>/dev/null && pwd); then
+        log_error "Target directory does not exist: $TARGET_DIR"
+        exit 1
+    fi
+    TARGET_DIR="$resolved_dir"
+fi
 
 if [[ $# -eq 0 ]]; then
     pick_session
@@ -417,4 +451,4 @@ if [[ -z "$FORK_NAME" ]]; then
     read -rp "  Fork name (optional, Enter to skip): " FORK_NAME </dev/tty
 fi
 
-fork_conversation "$SESSION_ID" "$PROJECT_PATH"
+fork_conversation "$SESSION_ID" "$PROJECT_PATH" "$TARGET_DIR"
