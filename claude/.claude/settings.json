@@ -147,6 +147,8 @@
         ]
       }
     ],
+    "PostToolUse": [
+    ],
     "Notification": [
       {
         "matcher": "",
@@ -178,11 +180,13 @@
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
     "explanatory-output-style@claude-plugins-official": true,
-    "learning-output-style@claude-plugins-official": true
+    "learning-output-style@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   },
   "autoUpdatesChannel": "stable",
   "minimumVersion": "2.1.42",
   "feedbackSurveyState": {
     "lastShownTime": 1753939765399
-  }
+  },
+  "effortLevel": "high"
 }
