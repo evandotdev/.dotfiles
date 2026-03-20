@@ -1,6 +1,6 @@
 [user]
     name = Evan Tan
-    email = REDACTED@example.com
+    email = 36868915+evandotdev@users.noreply.github.com
 
 [core]
     sshCommand = "ssh -i ~/.ssh/macos-personal"

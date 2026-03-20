@@ -530,3 +530,10 @@ export PATH="$HOME/.deno/bin:$PATH"
 # bun completions
 [ -s "/Users/jarvis/.bun/_bun" ] && source "/Users/jarvis/.bun/_bun"
 
+unalias cl clr 2>/dev/null
+cl() {
+    ENABLE_LSP_TOOL=1 claude "$@";
+}
+clr() { 
+    ENABLE_LSP_TOOL=1 claude --resume "$@"; 
+}
