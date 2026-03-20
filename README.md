@@ -7,6 +7,13 @@ Run the `bootstrap.sh` script to download dependencies.
 Install using the `install` script to use stow to place dotfiles into the relevant places, based on shared_vars.
 Remove dotfiles using the `clean-env` script.
 
+```
+git clone https://github.com/evandotdev/.dotfiles ~
+cd ~/.dotfiles
+# check `shared_vars` to enable/disable specific installs via stow
+./install
+```
+
 ---
 
 # Command Reference
