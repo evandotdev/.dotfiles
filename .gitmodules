@@ -2,6 +2,5 @@
 	path = okg
 	url = git@gh-personal1:evandotdev/okg.git
 [submodule "nvim/.config/nvim"]
-        path = nvim/.config/nvim
-        url = git@gh-personal1:evandotdev/kickstart.nvim.git
-
+	path = nvim/.config/nvim
+	url = git@gh-personal1:evandotdev/kickstart.nvim.git
