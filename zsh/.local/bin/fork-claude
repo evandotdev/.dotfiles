@@ -53,7 +53,7 @@ generate_uuid() {
 }
 
 convert_path_to_dirname() {
-    echo "$1" | sed 's|^/||' | sed 's|/|-|g' | sed 's|^|-|'
+    echo "$1" | sed 's|^/||' | sed 's|/|-|g' | sed 's|\.|-|g' | sed 's|^|-|'
 }
 
 find_conversation_file() {
