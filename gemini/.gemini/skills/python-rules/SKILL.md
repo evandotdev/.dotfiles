@@ -3,7 +3,7 @@ description: Python project conventions and best practices. Use when writing Pyt
 allowed_tools: read_file, run_shell_command
 model: haiku
 argument-hint: [project-name]
-user-invocable: false
+user-invocable: true
 ---
 
 # Python Project Standards
