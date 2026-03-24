@@ -28,3 +28,4 @@ if command -v claude &>/dev/null; then
 else
 	echo "WARN: claude CLI not found — skipping MCP setup. Re-run after installing Claude Code."
 fi
+c() { IS_SANDBOX=1 ENABLE_LSP_TOOL=1 claude --continue --dangerously-skip-permissions "$@";
