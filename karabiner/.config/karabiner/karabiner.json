@@ -114,7 +114,13 @@
                         "is_keyboard": true,
                         "is_pointing_device": true
                     },
-                    "ignore": false
+                    "ignore": false,
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "caps_lock" },
+                            "to": [{ "key_code": "left_control" }]
+                        }
+                    ]
                 },
                 {
                     "identifiers": {
@@ -143,26 +149,12 @@
                     "ignore": false
                 }
             ],
-            "fn_function_keys": [
-                {
-                    "from": { "key_code": "f5" },
-                    "to": [{ "apple_vendor_top_case_key_code": "illumination_down" }]
-                },
-                {
-                    "from": { "key_code": "f6" },
-                    "to": [{ "apple_vendor_top_case_key_code": "illumination_up" }]
-                }
-            ],
             "name": "Default profile",
             "selected": true,
             "simple_modifications": [
                 {
                     "from": { "key_code": "caps_lock" },
                     "to": [{ "key_code": "left_control" }]
-                },
-                {
-                    "from": { "key_code": "f3" },
-                    "to": [{ "apple_vendor_keyboard_key_code": "mission_control" }]
                 }
             ],
             "virtual_hid_keyboard": {
