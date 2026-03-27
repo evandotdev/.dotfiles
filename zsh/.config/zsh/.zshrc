@@ -334,8 +334,12 @@ tmux_windowizer_widget() {
 zle -N tmux_windowizer_widget
 
 windowizer() {
-    local selected=$(~/.local/bin/windowizer "$@")
-    [[ -n $selected ]] && cd "$selected"
+    if [[ -n $TMUX ]]; then
+        tmux-windowizer "$@"
+    else
+        local selected=$(~/.local/bin/windowizer "$@")
+        [[ -n $selected ]] && cd "$selected"
+    fi
 }
 
 windowizer_widget() {
