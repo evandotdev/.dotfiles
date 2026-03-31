@@ -1,0 +1,18 @@
+{
+  "lastChangelogVersion": "0.64.0",
+  "theme": "dark",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.3-codex",
+  "defaultThinkingLevel": "high",
+  "enabledModels": [
+    "anthropic/claude-sonnet-4-6",
+    "anthropic/claude-sonnet-4-5-20250929",
+    "anthropic/claude-opus-4-5-20251101",
+    "anthropic/claude-opus-4-6",
+    "anthropic/claude-haiku-4-5-20251001",
+    "anthropic/claude-haiku-4-5",
+    "openai-codex/gpt-5.3-codex",
+    "openai-codex/gpt-5.4",
+    "openai-codex/gpt-5.4-mini"
+  ]
+}

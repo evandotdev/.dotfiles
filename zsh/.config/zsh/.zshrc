@@ -541,3 +541,7 @@ cl() {
 clr() { 
     ENABLE_LSP_TOOL=1 claude --resume "$@"; 
 }
+
+pi() {
+    /Users/jarvis/personal/pi-mono/pi-test.sh "$@"
+}

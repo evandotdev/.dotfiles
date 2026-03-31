@@ -16,3 +16,11 @@ automatic_backups/
 # we don't commit this since it contains our emails, user id's org id's etc.
 .claude.json
 claude/.claude.json
+
+# pi - contains API keys
+pi/.pi/agent/auth.json
+# pi - chat history
+pi/.pi/agent/sessions/
+# pi - installed packages (reinstallable via pi install)
+pi/.pi/agent/git/
+pi/.pi/agent/npm/
