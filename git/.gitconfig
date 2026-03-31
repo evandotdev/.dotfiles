@@ -83,3 +83,5 @@
 ;	insteadOf = git@github.com:
 [url "git@github.com:"]
 	pushInsteadOf = https://github.com/
+[lfs "ssh"]
+    autoMultiplex = false
