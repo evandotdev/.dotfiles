@@ -21,6 +21,8 @@ SHELL_SESSIONS_DISABLE=1
 
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 export DOTFILES="$HOME/.dotfiles"
+export PI_DIR="$HOME/pi-mono"
+
 [ ! -d "$HOME/bin" ] && mkdir -p "$HOME/bin"
 [ ! -d "$HOME/.local/bin" ] && mkdir -p "$HOME/.local/bin"
 
