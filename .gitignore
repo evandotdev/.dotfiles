@@ -15,6 +15,7 @@ automatic_backups/
 
 # we don't commit this since it contains our emails, user id's org id's etc.
 .claude.json
+.claude.json.tmp*
 claude/.claude.json
 
 # pi - contains API keys
