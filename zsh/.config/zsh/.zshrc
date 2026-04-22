@@ -526,3 +526,147 @@ pi() {
     /Users/jarvis/pi-mono/pi-test.sh "$@"
 }
 eval "$(mise activate zsh)"
+
+git-push-mirror() {
+   echo "[git-push-mirror] Starting"
+
+   if ! git rev-parse --git-dir >/dev/null 2>&1; then
+       echo "❌ [git-push-mirror] Error: not in a git repository" >&2
+       return 1
+   fi
+
+   local mirror_remote="mirror"
+   local branch="${1:-$(git rev-parse --abbrev-ref HEAD)}"
+   local origin_url
+   origin_url="$(git config --get remote.origin.url)"
+
+   echo "[git-push-mirror] Current repo: $(pwd)"
+   echo "[git-push-mirror] Target branch: $branch"
+   echo "[git-push-mirror] Origin URL: ${origin_url:-<missing>}"
+
+   if [[ -z "$origin_url" ]]; then
+       echo "❌ [git-push-mirror] Error: no origin remote found" >&2
+       return 1
+   fi
+
+   if git config --get "remote.${mirror_remote}.url" >/dev/null 2>&1; then
+       local existing_mirror_url
+       existing_mirror_url="$(git config --get "remote.${mirror_remote}.url")"
+       echo "[git-push-mirror] Existing mirror remote found: $existing_mirror_url"
+   else
+       local ssh_host owner repo_name inferred_mirror_url
+
+       echo "[git-push-mirror] No mirror remote found, inferring mirror URL from origin"
+
+       if [[ "$origin_url" =~ ^git@([^:]+):([^/]+)/([^/]+)\.git$ ]]; then
+           ssh_host="${match[1]}"
+           owner="${match[2]}"
+           repo_name="${match[3]}"
+           inferred_mirror_url="git@${ssh_host}:${owner}/${repo_name}-mirror.git"
+           echo "[git-push-mirror] Parsed SSH origin"
+       elif [[ "$origin_url" =~ ^https://github\.com/([^/]+)/([^/]+)\.git$ ]]; then
+           owner="${match[1]}"
+           repo_name="${match[2]}"
+           inferred_mirror_url="git@github.com:${owner}/${repo_name}-mirror.git"
+           echo "[git-push-mirror] Parsed HTTPS origin"
+       else
+           echo "❌ [git-push-mirror] Error: unsupported origin URL format: $origin_url" >&2
+           return 1
+       fi
+
+       echo "[git-push-mirror] Inferred mirror remote URL: $inferred_mirror_url"
+       echo "[git-push-mirror] Adding mirror remote"
+       git remote add "$mirror_remote" "$inferred_mirror_url"
+       echo "[git-push-mirror] Added ${mirror_remote} remote"
+   fi
+
+   local mirror_url local_sha remote_sha ahead_count behind_count
+   mirror_url="$(git config --get "remote.${mirror_remote}.url")"
+   local_sha="$(git rev-parse "$branch")"
+
+   echo "[git-push-mirror] Mirror URL: $mirror_url"
+   echo "[git-push-mirror] Checking remote repository availability"
+
+   local ls_remote_error
+   ls_remote_error="$(git ls-remote "$mirror_remote" 2>&1 >/dev/null)"
+   local ls_remote_exit=$?
+
+   if [[ $ls_remote_exit -ne 0 ]]; then
+       echo "❌ [git-push-mirror] Error: mirror remote is configured locally, but the remote repository is not reachable" >&2
+       echo "[git-push-mirror] Mirror URL: $mirror_url" >&2
+       echo "[git-push-mirror] git ls-remote output:" >&2
+       echo "$ls_remote_error" >&2
+       echo "[git-push-mirror] Common causes:" >&2
+       echo "[git-push-mirror]   - the mirror repo does not exist yet" >&2
+       echo "[git-push-mirror]   - the SSH host alias is wrong" >&2
+       echo "[git-push-mirror]   - your SSH key does not have access" >&2
+       return $ls_remote_exit
+   fi
+
+   echo "[git-push-mirror] Remote repository is reachable"
+   echo "[git-push-mirror] Checking whether branch '${branch}' exists on ${mirror_remote}"
+
+   git ls-remote --exit-code --heads "$mirror_remote" "$branch" >/dev/null 2>&1
+   local remote_branch_status=$?
+
+   if [[ $remote_branch_status -eq 0 ]]; then
+       echo "[git-push-mirror] Remote branch exists, fetching for comparison"
+       git fetch "$mirror_remote" "$branch" --quiet
+
+       remote_sha="$(git rev-parse "FETCH_HEAD")"
+       ahead_count="$(git rev-list --count "${remote_sha}..${branch}")"
+       behind_count="$(git rev-list --count "${branch}..${remote_sha}")"
+
+       echo "[git-push-mirror] Local ${branch} SHA:  $local_sha"
+       echo "[git-push-mirror] Remote ${branch} SHA: $remote_sha"
+       echo "[git-push-mirror] Commits to push:      $ahead_count"
+       echo "[git-push-mirror] Commits only remote:   $behind_count"
+   elif [[ $remote_branch_status -eq 2 ]]; then
+       ahead_count="$(git rev-list --count "$branch")"
+       behind_count="0"
+
+       echo "[git-push-mirror] Remote repository exists, but branch '${branch}' does not exist yet"
+       echo "[git-push-mirror] Local ${branch} SHA:  $local_sha"
+       echo "[git-push-mirror] Commits to push:      $ahead_count"
+       echo "[git-push-mirror] This looks like an initial push"
+   else
+       echo "❌ [git-push-mirror] Error: failed to determine whether branch '${branch}' exists on ${mirror_remote}" >&2
+       return $remote_branch_status
+   fi
+
+   if [[ "$ahead_count" -eq 0 && "$behind_count" -eq 0 ]]; then
+       echo "✅ [git-push-mirror] Mirror is already up to date"
+       return 0
+   fi
+
+   if [[ "$behind_count" -gt 0 ]]; then
+       echo "[git-push-mirror] Warning: remote has commits not in local branch" >&2
+       echo "[git-push-mirror] Push may be rejected unless histories are reconciled" >&2
+   fi
+
+   echo "[git-push-mirror] Executing: git push ${mirror_remote} ${branch}:${branch}"
+   git push "$mirror_remote" "${branch}:${branch}"
+   local exit_code=$?
+
+   if [[ $exit_code -ne 0 ]]; then
+       echo "❌ [git-push-mirror] Push failed with exit code $exit_code" >&2
+       return $exit_code
+   fi
+
+   echo "[git-push-mirror] Push succeeded"
+   echo "[git-push-mirror] Refreshing remote-tracking branch"
+   git fetch "$mirror_remote" "$branch" --quiet
+
+   local new_remote_sha remaining_ahead
+   new_remote_sha="$(git rev-parse "FETCH_HEAD")"
+   remaining_ahead="$(git rev-list --count "${new_remote_sha}..${branch}")"
+
+   echo "[git-push-mirror] Post-push remote SHA: $new_remote_sha"
+   echo "[git-push-mirror] Remaining commits to push: $remaining_ahead"
+
+   if [[ "$new_remote_sha" == "$local_sha" ]]; then
+       echo "[git-push-mirror] Local and mirror branch tips match"
+   fi
+
+   echo "✅ [git-push-mirror] Done"
+}
