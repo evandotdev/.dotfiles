@@ -1,6 +1,8 @@
 # Turn off all beeps
 unsetopt BEEP
 
+HOMEBREW_NO_AUTO_UPDATE=1
+
 # Load colors so we can access $fg and more.
 autoload -U colors && colors
 
@@ -279,44 +281,22 @@ conda_remove() {
     done
 }
 
-# # Start SSH agent
-# if [ -z "$SSH_AUTH_SOCK" ]; then
-#     # Check for a currently running instance of the agent
-#     if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-#         # Start a new instance of the agent
-#         ssh-agent -s > "$HOME/.ssh/ssh-agent"
-#     fi
-#     if [[ -f "$HOME/.ssh/ssh-agent" ]]; then
-#         eval "$(<"$HOME/.ssh/ssh-agent")" > /dev/null
-#     fi
-# fi
-# set SSH_AUTH_SOCK env var to a fixed value
-export SSH_AUTH_SOCK=~/.ssh/ssh-agent.sock
+# OpenSSH agent on a stable socket (shared across shells/tmux)
+export SSH_AUTH_SOCK="$HOME/.ssh/ssh-agent.sock"
 
-# test whether $SSH_AUTH_SOCK is valid
-ssh-add -l 2>/dev/null >/dev/null
+# ssh-add -l exit codes: 0 keys loaded, 1 no keys, 2 no agent
+ssh-add -l >/dev/null 2>&1
+if [ $? -ge 2 ]; then
+    rm -f "$SSH_AUTH_SOCK"
+    ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+fi
 
-# if not valid, then start ssh-agent using $SSH_AUTH_SOCK
-[ $? -ge 2 ] && ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+# GPG for signing/encryption only (SSH is handled by OpenSSH agent)
+gpgconf --launch gpg-agent >/dev/null 2>&1
+gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 
 # Use fz for frecency-based directory jumping with proper ranking
 alias zf='fz'
-
-# In order for gpg to find gpg-agent, gpg-agent must be running, and there must be an env
-# variable pointing GPG to the gpg-agent socket. This little script, which must be sourced
-# in your shell's init script (ie, .bash_profile, .zshrc, whatever), will either start
-# gpg-agent or set up the GPG_AGENT_INFO variable if it's already running.
-
-# Add the following to your shell init to set up gpg-agent automatically for every shell
-if [ -f ~/.gnupg/.gpg-agent-info ] && [ -z "$(pgrep gpg-agent)" ]; then
-    source ~/.gnupg/.gpg-agent-info
-    export GPG_AGENT_INFO
-elif [ -z "$(pgrep gpg-agent)" ]; then
-    # deprecated
-    # eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
-    echo "starting gpg-agent"
-    eval $(gpg-agent --daemon)
-fi
 # for a silent tmux sessionizer experience
 # Define a custom to run tmux-sessionizer
 tmux_sessionizer_widget() {
@@ -543,5 +523,6 @@ clr() {
 }
 
 pi() {
-    /Users/jarvis/personal/pi-mono/pi-test.sh "$@"
+    /Users/jarvis/pi-mono/pi-test.sh "$@"
 }
+eval "$(mise activate zsh)"
